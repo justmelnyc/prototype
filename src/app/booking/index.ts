@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-import { BookingComponent } from './booking/booking.component';
+import { BookingComponent } from './booking/booking';
 
 const routes: Routes = [
   { path: '', component: BookingComponent}

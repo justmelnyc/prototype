@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalService} from '../../shared/modal/modal.service'
 
 @Component({
-  selector: 'home',
+  selector: 'contact',
   template: `
-    <section class="hero hero is-primary is-bold is-large">
-   
+    <section class="hero hero is-warning is-bold is-medium">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1">
-            The eyes are windows to the soul
+            contact
           </h1>
           <h2 class="subtitle">
             Subtitle
@@ -17,22 +15,17 @@ import {ModalService} from '../../shared/modal/modal.service'
         </div>
       </div>
     </section>
-
-
     <section class="section">
       <div class="container content"  style="padding-bottom: 40em">
-        <p class="has-text-centered">Skeleton template for a layout.</p>
+        <p class="has-text-centered">Form will go here.</p>
       </div>
     </section>
-    
-    
-    
   `,
   styles: []
 })
-export class HomeComponent implements OnInit {
+export class ContactComponent implements OnInit {
 
-  constructor(private modal: ModalService) { }
+  constructor() { }
 
   ngOnInit() {
   }

@@ -24,6 +24,12 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
           <a routerLink="booking" routerLinkActive="is-active" class="nav-item">
             Booking
           </a>
+          <a routerLink="users" routerLinkActive="is-active" class="nav-item">
+            Users
+          </a>
+          <a routerLink="contact" routerLinkActive="is-active" class="nav-item">
+            Contact
+          </a>
           <ng-content></ng-content>
         </div>
       </div>

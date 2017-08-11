@@ -1,16 +1,25 @@
-import { Component } from '@angular/core';
-import {fadeInOut} from './animations';
+import { Component } from '@angular/core'
+import {fadeInOut} from './animations'
+import {Router} from '@angular/router'
+import {AuthService} from './core/auth.service'
+import {ModalService} from './shared/modal/modal.service'
 
 @Component({
   selector: 'root',
   template: `
   <masthead>
-    <span class="nav-item" >
+    <span class="nav-item">
             <a class="button is-warning" #loginButton>
               <span>Sign In</span>
             </a>
     </span>
+    <span class="nav-item" *ngIf="auth.currentUser">
+            <a class="button is-danger" (click)="logout()">
+              <span>Sign Out</span>
+            </a>
+    </span>
   </masthead>
+  
   <ng-template #authModalBody>
     <div class="wordmarkSet">
       <h3 class="overlay-title">
@@ -24,7 +33,10 @@ import {fadeInOut} from './animations';
     </div>
     <div class="overlay-actions buttonSet">
       <div class="buttonSet buttonSet--vertical">
-        <button aria-label="Connect with Facebook" class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--facebook" title="Connect with Facebook">
+        <button aria-label="Connect with Facebook"
+                (click)="signInWithFacebook()"
+                class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--facebook"
+                title="Connect with Facebook">
             <span class="svgIcon svgIcon--facebookFilled svgIcon--25px">
               <svg class="svgIcon-use" height="25" viewbox="0 0 25 25" width="25">
                 <path d="M21 12.646C21 7.65 16.97 3.6 12 3.6s-9 4.05-9 9.046a9.026 9.026 0 0 0 7.59 8.924v-6.376H8.395V12.64h2.193v-1.88c0-2.186 1.328-3.375 3.267-3.375.93 0 1.728.07 1.96.1V9.77H14.47c-1.055 0-1.26.503-1.26 1.242v1.63h2.517l-.33 2.554H13.21V21.6c4.398-.597 7.79-4.373 7.79-8.954"></path>
@@ -37,7 +49,9 @@ import {fadeInOut} from './animations';
               </span>
           </div>
         </button>
-        <button aria-label="Connect with Google" class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--google" title="Connect with Google">
+        <button aria-label="Connect with Google" (click)="signInWithGoogle()"
+                class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--google" 
+                title="Connect with Google">
             <span class="svgIcon svgIcon--googleNew svgIcon--25px">
               <svg class="svgIcon-use" height="25" viewbox="0 0 25 25" width="25">
                 <g fill="none" fill-rule="evenodd">
@@ -52,15 +66,19 @@ import {fadeInOut} from './animations';
         </button>
         <button class="button button--primary button--large button--chromeless button--link u-marginTop15">Sign in or sign up with email</button>
       </div>
-      <a class="link link--blackNormal link--underline u-fontSize15 u-baseColor--link" href="#">Terms of service</a>
+      <a class="link link--blackNormal link--underline u-fontSize15 u-baseColor--link" routerLink="tos">Terms of service</a>
     </div>
   </ng-template>
 
-  <modal #modal [@fadeInOut] [hideOnClickOutside]="true" [hideOnEsc]="true"
-            [body]="authModalBody"
-            *ModalOpenOnClick="[loginButton]">
+  <modal #modal
+         [@fadeInOut]
+         [hideOnClickOutside]="true"
+         [hideOnEsc]="true"
+         [body]="authModalBody"
+         *ModalOpenOnClick="[loginButton]">
     <i class="button button--close button--chromeless u-baseColor--buttonNormal" (click)="modal.close()">×</i>
   </modal>
+  
   <router-outlet></router-outlet>
   <foot></foot>`,
   styles: [``],
@@ -68,4 +86,30 @@ import {fadeInOut} from './animations';
 })
 export class AppComponent {
   title = 'Prototype';
+  constructor(public auth: AuthService, private router: Router, private modalService: ModalService) {}
+
+  /// Social Login
+
+  signInWithGoogle(): void {
+    this.auth.googleLogin()
+      .then(() => this.afterSignIn());
+  }
+
+  signInWithFacebook(): void {
+    this.auth.facebookLogin()
+      .then(() => this.afterSignIn());
+  }
+
+  /// Shared
+
+  private afterSignIn(): void {
+    // Do after login stuff here, such router redirects, toast messages, etc.
+    this.modalService.close();
+    this.router.navigate(['/booking']);
+  }
+
+  logout() {
+    this.auth.signOut();
+  }
+
 }

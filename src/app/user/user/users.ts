@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'booking',
+  selector: 'users',
   template: `
-    <section class="hero hero is-danger is-bold is-medium">
+    <section class="hero hero is-info is-bold is-small">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1">
-            Title
+            These are the users yall
           </h1>
           <h2 class="subtitle">
             Subtitle
@@ -15,21 +15,25 @@ import { Component, OnInit } from '@angular/core';
         </div>
       </div>
     </section>
-
-
     <section class="section">
-      <div class="container content" style="padding-bottom: 40em">
+      <div class="container content"  style="padding-bottom: 40em">
         <p class="has-text-centered">Skeleton template for a layout.</p>
+        <span class="nav-item">
+            <a class="button is-warning" routerLink="n6zQKC807GbCcsMXtCj8zlEDnAS2">
+              <span>got to mel's profile</span>
+            </a>
+    </span>
       </div>
     </section>
   `,
   styles: []
 })
-export class BookingComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit() {
   }
+
 
 }

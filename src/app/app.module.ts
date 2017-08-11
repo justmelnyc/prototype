@@ -1,28 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { HttpModule } from '@angular/http'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
 
 ///// Start FireStarter
-import { environment } from '../environments/environment';
-import { AngularFireModule } from 'angularfire2';
-export const firebaseConfig = environment.firebaseConfig;
+import { environment } from '../environments/environment'
+import { AngularFireModule } from 'angularfire2'
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { AngularFireAuthModule } from 'angularfire2/auth'
+export const firebaseConfig = environment.firebaseConfig
 
 // Core
-import { CoreModule } from './core/core.module';
+import { CoreModule } from './core/core.module'
 
 // Shared/Widget
-import { SharedModule } from './shared/shared.module';
-import { LayoutModule } from './shared/layout';
+import { SharedModule } from './shared/shared.module'
+// import { LayoutModule } from './shared/layout'
 
 // Feature Modules
-import {BookingModule} from './booking/index';
-import {HomeModule} from './home/index';
-import {ModalModule} from './shared/modal/modal.module';
+import {BookingModule} from './booking/index'
+import {HomeModule} from './home/index'
+import {ModalModule} from './shared/modal/modal.module'
 
 @NgModule({
   declarations: [
@@ -34,8 +36,10 @@ import {ModalModule} from './shared/modal/modal.module';
     HttpModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     CoreModule,
-    LayoutModule,
+    // LayoutModule,
     BookingModule,
     HomeModule,
     SharedModule,

@@ -15,20 +15,25 @@ import {ModalService} from './modal.service';
   selector: '[ModalOpenOnClick]'
 })
 export class ModalOpenDirective implements OnInit, OnDestroy {
+  clickHandler = (() => {
+    this.viewContainer.clear();
+    this.viewContainer.createEmbeddedView(this.templateRef);
+  }).bind(this);
 
+  routeHandler = (() => {
+    this.viewContainer.clear();
+    this.viewContainer.createEmbeddedView(this.templateRef);
+  }).bind(this);
 
   elements: HTMLBaseElement[];
 
   constructor(private templateRef: TemplateRef<any>,
               private viewContainer: ViewContainerRef,
               private modalService: ModalService) {
-
   }
 
   ngOnInit() {
-
     this.modalService.close$.subscribe(() => this.viewContainer.clear());
-
   }
 
   ngOnDestroy() {
@@ -47,12 +52,6 @@ export class ModalOpenDirective implements OnInit, OnDestroy {
 
     this.elements.forEach(el => el.addEventListener('click', this.clickHandler));
   }
-
-  clickHandler = (() => {
-    this.viewContainer.clear();
-    this.viewContainer.createEmbeddedView(this.templateRef);
-  }).bind(this);
-
 }
 
 
