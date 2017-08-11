@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalService} from '../../shared/modal/modal.service';
 
 @Component({
   selector: 'home',
@@ -21,12 +20,11 @@ import {ModalService} from '../../shared/modal/modal.service';
         <p class="has-text-centered">Skeleton template for a layout.</p>
       </div>
     </section>
-  `,
-  styles: []
+  `
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private modal: ModalService) { }
+  constructor() { }
 
   ngOnInit() {
   }

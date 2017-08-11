@@ -7,8 +7,9 @@ import {AuthService} from '../../core/auth.service'
     <div class="box" *ngIf="auth.currentUser">
       <h3>Howdy, {{ auth.currentUserDisplayName }}</h3>
       <img class="card-img-top" [src]="auth.currentUser.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
+      <p class="text-truncate">Email: {{ auth }}</p>
       <p class="text-truncate">UID: {{ auth.currentUserId }}</p>
-      <button class="button">Logout</button>
+      <button class="button is-danger" (click)="logOut()">Logout</button>
     </div>
   `,
   styles: []
@@ -18,5 +19,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
+  }
+  logOut() {
+    this.auth.signOut();
   }
 }
