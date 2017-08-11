@@ -1,2 +1,3 @@
-export * from './fade-in.animation';
-export * from './slide-in-out.animation';
+export * from './baseAnimation';
+export * from './fadeIn';
+export * from './slideInOut';

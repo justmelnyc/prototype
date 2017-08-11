@@ -55,12 +55,7 @@ export class AuthService {
     }
   }
 
-  //// Social Auth ////
 
-  githubLogin() {
-    const provider = new firebase.auth.GithubAuthProvider()
-    return this.socialSignIn(provider);
-  }
 
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -72,10 +67,6 @@ export class AuthService {
     return this.socialSignIn(provider);
   }
 
-  twitterLogin() {
-    const provider = new firebase.auth.TwitterAuthProvider()
-    return this.socialSignIn(provider);
-  }
 
   private socialSignIn(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
@@ -85,47 +76,6 @@ export class AuthService {
       })
       .catch(error => console.log(error));
   }
-
-
-  //// Anonymous Auth ////
-
-  anonymousLogin() {
-    return this.afAuth.auth.signInAnonymously()
-      .then((user) => {
-        this.authState = user;
-      })
-      .catch(error => console.log(error));
-  }
-
-  //// Email/Password Auth ////
-
-  emailSignUp(email: string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.authState = user
-        this.updateUserData()
-      })
-      .catch(error => console.log(error));
-  }
-
-  emailLogin(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.authState = user;
-        this.updateUserData();
-      })
-      .catch(error => console.log(error));
-  }
-
-  // Sends email allowing user to reset password
-  resetPassword(email: string) {
-    const fbAuth = firebase.auth();
-
-    return fbAuth.sendPasswordResetEmail(email)
-      .then(() => console.log('email sent'))
-      .catch((error) => console.log(error));
-  }
-
 
   //// Sign Out ////
 
@@ -144,7 +94,9 @@ export class AuthService {
     const path = `users/${this.currentUserId}`; // Endpoint on firebase
     const data = {
       email: this.authState.email,
-      name: this.authState.displayName
+      name: this.authState.displayName,
+      photo: this.authState.photoURL,
+
     };
 
     this.db.object(path).update(data)

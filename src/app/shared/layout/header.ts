@@ -31,11 +31,15 @@ import {AuthService} from '../../core/auth.service'
           <a routerLink="contact" routerLinkActive="is-active" class="nav-item">
             Contact
           </a>
-          <span class="nav-item" *ngIf="!auth.currentUser">
-            <a class="button is-warning" routerLink="login">
+          <span class="nav-item" >
+            <a class="button is-warning" routerLink="login" *ngIf="!auth.currentUser; else alreadyLoggedIn">
               <span>Sign In</span>
             </a>
+            <ng-template #alreadyLoggedIn>
+           
+          </ng-template>
           </span>
+          
         </div>
       </div>
     </header>

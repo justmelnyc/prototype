@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'users',
   template: `
-    <section class="hero hero is-info is-bold is-medium">
+    <section class="hero hero is-info is-bold is-medium acct">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1">
