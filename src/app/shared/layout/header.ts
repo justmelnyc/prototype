@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {AuthService} from '../../core/auth.service'
 
 @Component({
   selector: 'masthead',
@@ -30,7 +31,11 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
           <a routerLink="contact" routerLinkActive="is-active" class="nav-item">
             Contact
           </a>
-          <ng-content></ng-content>
+          <span class="nav-item" *ngIf="!auth.currentUser">
+            <a class="button is-warning" routerLink="login">
+              <span>Sign In</span>
+            </a>
+          </span>
         </div>
       </div>
     </header>
@@ -39,7 +44,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  constructor() {
+  constructor(private auth: AuthService) {
 
   }
 }

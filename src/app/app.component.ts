@@ -8,16 +8,12 @@ import {ModalService} from './shared/modal/modal.service'
   selector: 'root',
   template: `
   <masthead>
-    <span class="nav-item">
-            <a class="button is-warning" #loginButton>
-              <span>Sign In</span>
-            </a>
-    </span>
-    <span class="nav-item" *ngIf="auth.currentUser">
-            <a class="button is-danger" (click)="logout()">
-              <span>Sign Out</span>
-            </a>
-    </span>
+   
+    <!--<span class="nav-item" *ngIf="auth.currentUser">-->
+            <!--<a class="button is-danger" (click)="logout()">-->
+              <!--<span>Sign Out</span>-->
+            <!--</a>-->
+    <!--</span>-->
   </masthead>
   
   <ng-template #authModalBody>
@@ -70,46 +66,23 @@ import {ModalService} from './shared/modal/modal.service'
     </div>
   </ng-template>
 
-  <modal #modal
-         [@fadeInOut]
-         [hideOnClickOutside]="true"
-         [hideOnEsc]="true"
-         [body]="authModalBody"
-         *ModalOpenOnClick="[loginButton]">
-    <i class="button button--close button--chromeless u-baseColor--buttonNormal" (click)="modal.close()">×</i>
-  </modal>
+  <!--<modal #modal-->
+         <!--[@fadeInOut]-->
+         <!--[hideOnClickOutside]="true"-->
+         <!--[hideOnEsc]="true"-->
+         <!--[body]="authModalBody"-->
+         <!--*ModalOpenOnClick="[loginButton]">-->
+    <!--<i class="button button&#45;&#45;close button&#45;&#45;chromeless u-baseColor&#45;&#45;buttonNormal" (click)="modal.close()">×</i>-->
+  <!--</modal>-->
   
   <router-outlet></router-outlet>
-  <foot></foot>`,
+  <!--<foot></foot>-->
+  `,
   styles: [``],
   animations: [fadeInOut]
 })
 export class AppComponent {
   title = 'Prototype';
   constructor(public auth: AuthService, private router: Router, private modalService: ModalService) {}
-
-  /// Social Login
-
-  signInWithGoogle(): void {
-    this.auth.googleLogin()
-      .then(() => this.afterSignIn());
-  }
-
-  signInWithFacebook(): void {
-    this.auth.facebookLogin()
-      .then(() => this.afterSignIn());
-  }
-
-  /// Shared
-
-  private afterSignIn(): void {
-    // Do after login stuff here, such router redirects, toast messages, etc.
-    this.modalService.close();
-    this.router.navigate(['/booking']);
-  }
-
-  logout() {
-    this.auth.signOut();
-  }
 
 }

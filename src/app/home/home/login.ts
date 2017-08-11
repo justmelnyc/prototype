@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../core/auth.service'
+import {Router} from '@angular/router'
+import {ModalService} from '../../shared/modal/modal.service'
 
 @Component({
   selector: 'login',
@@ -67,9 +70,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService, private router: Router, private modalService: ModalService) {
 
-  ngOnInit() {
+  }
+  ngOnInit() {}
+
+  /// Social Login
+  signInWithGoogle(): void {
+    this.auth.googleLogin()
+      .then(() => this.afterSignIn());
+  }
+
+  signInWithFacebook(): void {
+    this.auth.facebookLogin()
+      .then(() => this.afterSignIn());
+  }
+
+  /// Shared
+  private afterSignIn(): void {
+    // Do after login stuff here, such router redirects, toast messages, etc.
+    this.modalService.close();
+    this.router.navigate(['/booking']);
+  }
+
+  /// logout
+  logout() {
+    this.auth.signOut();
   }
 
 
