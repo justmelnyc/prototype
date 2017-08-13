@@ -11,7 +11,21 @@ import { Component } from '@angular/core';
         <path d="M35.333 63.495c0 1.675-1.266 2.432-2.814 1.683L16.68 57.52c-.92-.444-1.68-1.633-1.68-2.64V17.35c0-1.34 1.013-1.946 2.253-1.346l17.97 8.693c.068.03.11.095.11.166v38.633z"></path>
       </svg>
     </span>
-  `
+  `,
+  styles: [`
+    .svgIcon--logoNew path:nth-child(1) {
+      fill: #d0d2d3
+    }
+    .svgIcon--logoNew path:nth-child(2) {
+      fill: #a6a8ab
+    }
+    .svgIcon--logoNew path:nth-child(3) {
+      fill: #808184
+    }
+    .svgIcon--logoNew path:nth-child(4) {
+      fill: #58595b
+    }
+  `]
 })
 export class LogoComponent {
   constructor() {

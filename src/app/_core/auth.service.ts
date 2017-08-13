@@ -3,6 +3,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import {Observable} from 'rxjs/Observable'
 
 
 @Injectable()
@@ -10,13 +11,17 @@ export class AuthService {
 
   authState: any = null;
 
+
+  public user: Observable<firebase.User>;
+
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
               private router: Router) {
 
-    this.afAuth.authState.subscribe((auth) => {
-      this.authState = auth;
-    });
+    // this.afAuth.authState.subscribe((auth) => {
+    //   this.authState = auth;
+    // });
+    this.user = afAuth.authState;
   }
 
   // Returns true if user is logged in

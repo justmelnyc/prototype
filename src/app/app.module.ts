@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { HttpModule } from '@angular/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-import { AppRoutingModule } from './app-routing.module'
+import { AppRoutingModule } from './app.routes'
 import { AppComponent } from './app.component'
 
 ///// Start FireStarter
@@ -15,16 +15,15 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 export const firebaseConfig = environment.firebaseConfig
 
 // Core
-import { CoreModule } from './core/core.module'
+import { CoreModule } from './_core/core.module'
 
 // Shared/Widget
-import { SharedModule } from './shared/shared.module'
-// import { LayoutModule } from './shared/layout'
+import { SharedModule } from './_shared/shared.module'
 
 // Feature Modules
 import {BookingModule} from './booking/index'
 import {HomeModule} from './home/index'
-import {ModalModule} from './shared/modal/modal.module'
+import {ModalModule} from './_shared/modal/modal.module'
 
 @NgModule({
   declarations: [
@@ -39,7 +38,7 @@ import {ModalModule} from './shared/modal/modal.module'
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     CoreModule,
-    // LayoutModule,
+    ReactiveFormsModule,
     BookingModule,
     HomeModule,
     SharedModule,

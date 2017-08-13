@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
         <div class="columns">
           <div class="column is-3">
             <div id="about" class="content">
-              <strong xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Bulma</strong> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://jgthms.com" property="cc:attributionName" rel="cc:attributionURL">Jeremy Thomas</a>.
+              <strong>Bulma</strong> by <a>Jeremy Thomas</a>.
               <p id="alternative">
                 <a href="#">An alternative to <strong>Bootstrap</strong></a>
               </p>
@@ -58,6 +58,9 @@ import { Component } from '@angular/core';
     </footer>
   `,
   styles: [`
+    .footer {
+      background: white;
+    }
     #sister ul {
       display: flex;
       -ms-flex-wrap: wrap;

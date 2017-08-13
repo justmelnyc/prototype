@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'users',
   template: `
-    <section class="hero hero is-info is-bold is-medium acct">
+    <section class="hero is-info is-medium header-image acct">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title is-1">
@@ -26,7 +26,12 @@ import { Component, OnInit } from '@angular/core';
       </div>
     </section>
   `,
-  styles: []
+  styles: [`
+    .header-image {
+      background-size: cover;
+      background: linear-gradient(rgba(0, 0, 0, 0.29), rgba(0, 0, 0, 0.59)), url('https://images.unsplash.com/photo-1454328911520-ccf83f1ef41d?dpr?dpr=2&auto=format&fit=crop&w=1500&h=1011&q=80&cs=tinysrgb&crop=') center;
+    }
+  `]
 })
 export class UsersComponent implements OnInit {
 
