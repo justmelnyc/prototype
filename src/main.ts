@@ -17,6 +17,8 @@ import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/observable/of';
 import 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/Observable'
+import 'rxjs/Subscription'
 
 
 if (environment.production) {

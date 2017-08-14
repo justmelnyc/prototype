@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { fadeInAnimation } from '../../_animations/index';
 
 @Component({
   selector: 'home',
-  animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': '' },
   template: `
     <section class="hero is-primary is-large header-image">
       <div class="hero-body">

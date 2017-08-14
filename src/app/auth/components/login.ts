@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../_core/auth.service'
 import { Router } from '@angular/router'
-import { ModalService } from '../../_shared/modal/modal.service'
+import {AuthServiceNew} from '../services/auth'
+// import {AuthService} from '../services/auth.service'
 
 @Component({
   selector: 'login',
@@ -11,8 +11,8 @@ import { ModalService } from '../../_shared/modal/modal.service'
         <div class="container">
           <div class="columns is-vcentered">
             <!--is-6 is-offset-3-->
-            <div class="column has-text-centered">
-              <div class="overlay-dialog box">
+            <div class="columns column is-6 is-offset-3 has-text-centered">
+              <div class="overlay-dialog column is-10 is-offset-1 box">
 
                 <div class="wordmarkSet">
                   <h3 class="overlay-title">
@@ -74,21 +74,20 @@ import { ModalService } from '../../_shared/modal/modal.service'
     }
     .box .button--signin {
       text-align: center;
-      
     }
   `]
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public auth: AuthService, private router: Router, private modalService: ModalService) {
+  constructor(public auth: AuthServiceNew, private router: Router) {
 
   }
   ngOnInit() {}
 
-  /// Social Login
-  signInWithGoogle(): void {
-    this.auth.googleLogin()
-      .then(() => this.afterSignIn());
+  // Social Login
+  async signInWithGoogle() {
+    await this.auth.googleLogin()
+    this.afterSignIn();
   }
 
   signInWithFacebook(): void {
@@ -96,16 +95,15 @@ export class LoginComponent implements OnInit {
       .then(() => this.afterSignIn());
   }
 
-  /// Shared
+  // Shared
   private afterSignIn(): void {
     // Do after login stuff here, such router redirects, toast messages, etc.
-    this.modalService.close();
     this.router.navigate(['/booking']);
   }
 
   /// logout
   logout() {
-    this.auth.signOut();
+    this.auth.logoutUser();
   }
 
 

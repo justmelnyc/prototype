@@ -5,12 +5,10 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import {Observable} from 'rxjs/Observable'
 
-
 @Injectable()
 export class AuthService {
 
   authState: any = null;
-
 
   public user: Observable<firebase.User>;
 
@@ -59,7 +57,6 @@ export class AuthService {
       return this.authState['displayName'] || 'User without a Name';
     }
   }
-
 
 
   googleLogin() {

@@ -18,12 +18,17 @@ export const firebaseConfig = environment.firebaseConfig
 import { CoreModule } from './_core/core.module'
 
 // Shared/Widget
-import { SharedModule } from './_shared/shared.module'
+import { SharedModule } from './_shared/'
 
 // Feature Modules
 import {BookingModule} from './booking/index'
-import {HomeModule} from './home/index'
+import {HomeModule} from './static/index'
+import {AuthModule} from './auth/index'
+
 import {ModalModule} from './_shared/modal/modal.module'
+
+import {AuthServiceNew} from './auth/services/auth'
+import {Store} from 'store'
 
 @NgModule({
   declarations: [
@@ -42,10 +47,13 @@ import {ModalModule} from './_shared/modal/modal.module'
     BookingModule,
     HomeModule,
     SharedModule,
+    AuthModule.forRoot(),
     ModalModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [],
+  providers: [
+    Store
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {AuthService} from '../../_core/auth.service'
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core'
+import {AuthServiceNew} from '../../auth/services/auth'
+import {User} from '../../auth/models/user'
+
 
 @Component({
   selector: 'masthead',
@@ -37,13 +39,13 @@ import {AuthService} from '../../_core/auth.service'
             Contact
           </a>
           <span class="navbar-item " >
-            <a class="button is-warning" routerLink="login" *ngIf="user$.photoURL == null; else alreadyLoggedIn">
+            <a class="button is-warning" routerLink="login" *ngIf="user === null; else alreadyLoggedIn">
               <span>Sign In</span>
             </a>
             <ng-template #alreadyLoggedIn>
               <div class="navbar-item has-dropdown is-right is-hoverable">
-                <a class="navbar-link is-active avatar is-right" >
-                  <img class="card-img-top" [src]=" (user$ | async)?.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
+                <a class="navbar-link is-active avatar is-right">
+                  <img class="card-img-top" [src]="user?.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
                 </a>
                 <div class="navbar-dropdown is-right">
                   <a class="navbar-item " routerLink="booking">
@@ -56,28 +58,23 @@ import {AuthService} from '../../_core/auth.service'
                   <a class="navbar-item" routerLink="login">
                     Test Log In
                   </a>
-    
                   <a class="navbar-item">
                     Components
                   </a>
                   <hr class="navbar-divider">
-                   <a class="navbar-item" (click)="logOut()">
+                  <a class="navbar-item" (click)="logoutUser()">
                     Sign Out
                   </a>
-            </div>
-          </div>
-          </ng-template>
+                </div>
+              </div>
+            </ng-template>
           </span>
         </div>
       </div>
     </nav>
-    <div style="position: absolute; left: 50%; top: 50%;">
-      <pre style="padding: 1em; z-index: 1000; position: relative; left: -50%; top: -50%; font-size: 1.2em;">{{ (user$ | async)?.photoURL | json}}</pre>
-    </div>
-    
+   
   `,
-  styles: [`
-
+  styles: [`    
     .u-boxShadowBottomThinLighter {
       box-shadow: 0 2px 2px -2px rgba(0,0,0,.15);
     }
@@ -93,11 +90,13 @@ import {AuthService} from '../../_core/auth.service'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  public user$ = this.auth.user;
-  constructor(private auth: AuthService) {
+  @Input()
+  user: User;
 
-  }
-  logOut() {
-    this.auth.signOut();
+  @Output()
+  logout = new EventEmitter<any>();
+
+  logoutUser() {
+    this.logout.emit();
   }
 }

@@ -12,6 +12,9 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "store": ["store.ts"]
+    },
     "lib": [
       "es2016",
       "dom"
