@@ -29,6 +29,8 @@ import {ModalModule} from './_shared/modal/modal.module'
 
 import {AuthServiceNew} from './auth/services/auth'
 import {Store} from 'store'
+import {BlogModule} from './blog/index'
+import {UsersModule} from './user/index'
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import {Store} from 'store'
     BookingModule,
     HomeModule,
     SharedModule,
+    BlogModule.forRoot(),
+    UsersModule.forRoot(),
     AuthModule.forRoot(),
     ModalModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig)

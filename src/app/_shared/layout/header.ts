@@ -35,6 +35,9 @@ import {User} from '../../auth/models/user'
           <a routerLink="users" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
             Clients
           </a>
+          <a routerLink="blog" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
+            Blog
+          </a>
           <a routerLink="contact" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
             Contact
           </a>
@@ -51,8 +54,8 @@ import {User} from '../../auth/models/user'
                   <a class="navbar-item " routerLink="booking">
                     Book Reservation
                   </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item " [routerLink]="['users', 'n6zQKC807GbCcsMXtCj8zlEDnAS2']">
+                  <!--<hr class="navbar-divider">-->
+                  <a class="navbar-item  navbar-item--separator" [routerLink]="['users', 'n6zQKC807GbCcsMXtCj8zlEDnAS2']">
                     Account
                   </a>
                   <a class="navbar-item" routerLink="login">
@@ -61,8 +64,8 @@ import {User} from '../../auth/models/user'
                   <a class="navbar-item">
                     Components
                   </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item" (click)="logoutUser()">
+                  <!--<hr class="navbar-divider">-->
+                  <a class="navbar-item  navbar-item--separator" (click)="logoutUser()">
                     Sign Out
                   </a>
                 </div>
@@ -85,6 +88,24 @@ import {User} from '../../auth/models/user'
     }
     .navbar-item {
       padding: .1rem 1rem;
+    }
+    .navbar-dropdown .navbar-item {
+      padding: 7px 25px;
+      /*!*padding: 5px 15px;*!*/
+      /*box-sizing: border-box;*/
+      /*margin-top: 10px;*/
+      /*margin-bottom: 10px;*/
+    }
+    .navbar-dropdown .navbar-item:hover {
+      background: transparent;
+      
+    }
+    .navbar-item--separator{
+      border-top: solid 1px rgba(0,0,0,.05);
+      /*margin-top: 10px;*/
+      /*margin-bottom: 10px;*/
+      /*padding-bottom: 0;*/
+      /*padding-top: 0;*/
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

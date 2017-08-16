@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'user-profile',
-  styleUrls: ['profile.scss'],
+  styles: [`.avatar, .follow { float: right; } .avatar img { border-radius: 200px; }`],
   template: `
     <div class="section profile-heading">
       <div class="columns">
@@ -13,7 +13,7 @@ import { Component, Input } from '@angular/core';
         </div>
         <div class="column is-4 name">
           <div>
-            <span class="title is-bold">{{ user?.DisplayName }}</span>
+            <span class="title is-bold">{{ user?.displayName }}</span>
             {{ user?.email }}
             <span class="button is-primary is-outlined follow">Follow</span>
           </div>

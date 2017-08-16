@@ -18,6 +18,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'blog',
+    loadChildren: './blog/index#BlogModule', data: { animation: 'blog' }
+  },
+  {
     path: 'login',
     loadChildren: './auth/index#AuthModule', data: { animation: 'login' }
   }
