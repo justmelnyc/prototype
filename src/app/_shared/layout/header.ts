@@ -29,8 +29,8 @@ import {User} from '../../auth/models/user'
              class="navbar-item is-hidden-desktop-only" >
             Home
           </a>
-          <a routerLink="booking" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
-            Booking
+          <a routerLink="reservations" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
+            Reservations
           </a>
           <a routerLink="users" routerLinkActive="is-active" class="navbar-item is-hidden-desktop-only">
             Clients
@@ -48,7 +48,7 @@ import {User} from '../../auth/models/user'
                   <img class="card-img-top" [src]="user?.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
                 </a>
                 <div class="navbar-dropdown is-right">
-                  <a class="navbar-item " routerLink="booking">
+                  <a class="navbar-item " [routerLink]="['reservations', 'booking']">
                     Book Reservation
                   </a>
                   <hr class="navbar-divider">
@@ -57,9 +57,6 @@ import {User} from '../../auth/models/user'
                   </a>
                   <a class="navbar-item" routerLink="login">
                     Test Log In
-                  </a>
-                  <a class="navbar-item">
-                    Components
                   </a>
                   <hr class="navbar-divider">
                   <a class="navbar-item" (click)="logoutUser()">

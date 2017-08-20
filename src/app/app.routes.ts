@@ -8,8 +8,8 @@ const routes: Routes = [
     loadChildren: './static/index#HomeModule', data: { animation: 'home' }
   },
   {
-    path: 'booking',
-    loadChildren: './booking/index#BookingModule', data: { animation: 'booking' },
+    path: 'reservations',
+    loadChildren: './reservations/index#ReservationModule', data: { animation: 'reservations' },
     canActivate: [AuthGuard]
   },
   {

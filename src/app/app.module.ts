@@ -17,11 +17,20 @@ export const firebaseConfig = environment.firebaseConfig
 // Core
 import { CoreModule } from './_core/core.module'
 
+
+// NGRX
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects'
+import {StoreModule} from '@ngrx/store'
+
+import * as fromRootStore from './_store';
+
+
 // Shared/Widget
 import { SharedModule } from './_shared/'
 
 // Feature Modules
-import {BookingModule} from './booking/index'
+import {ReservationModule} from './reservations/index'
 import {HomeModule} from './static/index'
 import {AuthModule} from './auth/index'
 
@@ -29,6 +38,8 @@ import {ModalModule} from './_shared/modal/modal.module'
 
 import {AuthServiceNew} from './auth/services/auth'
 import {Store} from 'store'
+
+
 
 @NgModule({
   declarations: [
@@ -44,12 +55,15 @@ import {Store} from 'store'
     AngularFireAuthModule,
     CoreModule,
     ReactiveFormsModule,
-    BookingModule,
     HomeModule,
     SharedModule,
+    ReservationModule.forRoot(),
     AuthModule.forRoot(),
     ModalModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    StoreModule.forRoot(fromRootStore.reducers), /* Initialise the Central Store with Application's main reducer*/
+    EffectsModule.forRoot([]), /* Start monitoring app's side effects */
+    StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
   providers: [
     Store
