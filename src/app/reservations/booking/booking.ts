@@ -44,7 +44,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.redirectSub = this.actionsSubject
       .asObservable()
       .filter(action => action.type === reservationsActions.CREATE_SUCCESS)
-      .subscribe((action: reservationsActions.CreateSuccess) => this.router.navigate(['/reservations', action.payload.id]))
+      .subscribe((action: reservationsActions.CreateSuccess) => this.router.navigate(['/reservations', action.payload.$key]))
   }
 
   ngOnDestroy() {

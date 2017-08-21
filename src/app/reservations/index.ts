@@ -14,8 +14,9 @@ import {ReservationsService} from './services/reservation-service'
 import {ReservationsListComponent, ReservationFormComponent} from './components'
 import {ReservationsIndexComponent} from './reservations/reservations'
 import {ReactiveFormsModule} from '@angular/forms'
+import {DayPickerComponent} from './components/wizard/day-picker'
 
-const COMPONENTS = [ReservationFormComponent, BookingComponent, ReservationsIndexComponent, ReservationsListComponent ]
+const COMPONENTS = [ReservationFormComponent, BookingComponent, ReservationsIndexComponent, ReservationsListComponent, DayPickerComponent ]
 
 const routes: Routes = [
   { path: '',

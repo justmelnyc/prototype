@@ -85,7 +85,7 @@ function handleReservationUpdate(state: State, payload: Reservation): State {
 
 function handleReservationDelete(state: State, payload: Reservation ): State {
   const newState = Object.assign({}, state);
-  newState.reservationList = newState.reservationList.filter( c => c.id !== payload.id);
+  newState.reservationList = newState.reservationList.filter( c => c.$key !== payload.$key);
   return newState; // return new state without the deleted contact
 }
 

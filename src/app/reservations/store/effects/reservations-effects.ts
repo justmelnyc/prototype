@@ -36,7 +36,7 @@ export class ReservationsEffects {
         .mergeMap( (reservation: Reservation) => {
           return [
             new reservationsActions.LoadSuccess(reservation),
-            new reservationsActions.SetCurrentReservationId(reservation.id)
+            new reservationsActions.SetCurrentReservationId(reservation.$key)
           ]
         })
     );

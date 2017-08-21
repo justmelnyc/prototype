@@ -2,6 +2,30 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnIn
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Reservation} from '../models/res'
 
+import {
+  addDays,
+  addHours,
+  addMonths,
+  addWeeks,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  format,
+  isSameDay,
+  isSameMonth,
+  isSunday,
+  isWeekend,
+  isTuesday,
+  isWednesday,
+  isThursday,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks
+} from 'date-fns';
+
 
 @Component({
   selector: 'reservation-form',
@@ -25,13 +49,15 @@ import {Reservation} from '../models/res'
         </div>
         <!--<p class="help is-danger">This email is invalid</p>-->
       </div>
+     
 
-      <!--<div class="field">-->
-        <!--<label class="label">Message</label>-->
-        <!--<div class="control">-->
-          <!--<textarea class="textarea" placeholder="Say Hello!" formControlName="phone"></textarea>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="field">
+        <day-picker formControlName="reservationDate" [parent]="form"
+                    [dayModifier]="dayModifier"
+                    [viewDate]="viewDate"
+                    (dayClicked)="dayClicked($event.day)">
+        </day-picker>
+      </div>
 
       <div class="field" style="margin: 1em 0">
         <div class="control">
@@ -51,8 +77,18 @@ import {Reservation} from '../models/res'
 })
 export class ReservationFormComponent implements OnInit, OnChanges {
 
+  dayModifier: Function;
+  minDate: Date = subDays(new Date(), 1);
+  maxDate: Date = addWeeks(new Date(), 2);
+  viewDate: Date = new Date();
+
+  prevBtnDisabled = false;
+
+  nextBtnDisabled = false;
+
   @Input() reservation: Reservation = {
     $key: undefined,
+    reservationDate: '',
     name: '',
     email: '',
     // phone: ''
@@ -63,8 +99,19 @@ export class ReservationFormComponent implements OnInit, OnChanges {
   form: FormGroup;
 
   constructor(public formBuilder: FormBuilder) {
+
+    this.dayModifier = function (day: Date): string {
+      if (!this.dateIsValid(day)) {
+        // day.cssClass = 'cal-disabled';
+        return 'disabled';
+      }
+      return '';
+    }.bind(this);
+    this.dateOrViewChanged();
+
     this.form = this.formBuilder.group({
       '$key': [this.reservation.$key],
+      'reservationDate' : [this.reservation.reservationDate],
       'name': [this.reservation.name, Validators.required],
       'email': [this.reservation.email, Validators.required]
     })
@@ -85,6 +132,30 @@ export class ReservationFormComponent implements OnInit, OnChanges {
       this.onSubmit.emit(this.form.value);
     }
 
+  }
+
+  dayClicked(event) {
+    console.log(event)
+  }
+
+  dateOrViewChanged(): void {
+    // this.prevBtnDisabled = !this.dateIsValid(CalendarUtils.endOfPeriod(this.view, CalendarUtils.subPeriod(this.view, this.viewDate, 1)));
+    // this.nextBtnDisabled = !this.dateIsValid(CalendarUtils.startOfPeriod(this.view, CalendarUtils.addPeriod(this.view, this.viewDate, 1)));
+    // if (this.viewDate < this.minDate) {
+    //   this.changeDate(this.minDate);
+    // } else if (this.viewDate > this.maxDate) {
+    //   this.changeDate(this.maxDate);
+    // }
+    console.log('this')
+  }
+
+  changeDate(date: Date): void {
+    this.viewDate = date;
+    this.dateOrViewChanged();
+  }
+
+  dateIsValid(date: Date): boolean {
+    return date >= this.minDate && date <= this.maxDate;
   }
 
 }
