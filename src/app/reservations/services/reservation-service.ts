@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import {Observable} from 'rxjs/Observable'
 import {Reservation} from '../models/res'
 import {AngularFireAuth} from 'angularfire2/auth'
-import {AngularFireDatabase, AngularFireDatabaseModule, FirebaseListObservable} from 'angularfire2/database'
+import {AngularFireDatabase, AngularFireDatabaseModule, AngularFireList} from 'angularfire2/database'
 import {Http} from '@angular/http'
 
 
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class ReservationsService {
 
-  reservations: FirebaseListObservable<Reservation[]> = null;
+  reservations: AngularFireList<Reservation[]> = null;
 
   private basePath = '/reservations';
   private uid: string;
@@ -25,12 +25,12 @@ export class ReservationsService {
 
   }
 
-  index(): Observable<Reservation[]> {
-    return this.db.list(`${this.basePath}`);
+  index() {
+    return this.db.list(`${this.basePath}`).valueChanges();
   }
 
-  userIndex(): Observable<Reservation[]> {
-    return this.db.list(`${this.basePath}/${this.uid}`);
+  userIndex() {
+    return this.db.list(`${this.basePath}/${this.uid}`).valueChanges();
   }
   // showOne(): FirebaseListObservable<Reservation[]> {
   //   return this.firebase.database.list(`${this.basePath}/${this.authUid}`);
@@ -43,7 +43,7 @@ export class ReservationsService {
   // }
 
   show(reservationId: string) {
-    return this.db.list(`${this.basePath}`);
+    return this.db.list(`${this.basePath}`).valueChanges();
   }
 
   createReservation(reservation: Reservation) {

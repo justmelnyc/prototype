@@ -27,19 +27,19 @@ export class ReservationsEffects {
         .map((reservations: Reservation[]) => new reservationsActions.LoadAllSuccess(reservations))
     );
 
-  @Effect()
-  load$: Observable<Action> = this.actions$
-    .ofType(reservationsActions.LOAD)
-    .map( (action: reservationsActions.Load ) => action.payload)
-    .switchMap((id) =>
-      this.reservationsService.show(id)
-        .mergeMap( (reservation: Reservation) => {
-          return [
-            new reservationsActions.LoadSuccess(reservation),
-            new reservationsActions.SetCurrentReservationId(reservation.$key)
-          ]
-        })
-    );
+  // @Effect()
+  // load$: Observable<Action> = this.actions$
+  //   .ofType(reservationsActions.LOAD)
+  //   .map( (action: reservationsActions.Load ) => action.payload)
+  //   .switchMap((id) =>
+  //     this.reservationsService.show(id)
+  //       .mergeMap( (reservation: Reservation[]) => {
+  //         return [
+  //           new reservationsActions.LoadSuccess(reservation),
+  //           new reservationsActions.SetCurrentReservationId(reservation)
+  //         ]
+  //       })
+  //   );
 
   @Effect()
   create$: Observable<Action> = this.actions$
@@ -50,23 +50,23 @@ export class ReservationsEffects {
         .map((createdReservation: Reservation) => new reservationsActions.CreateSuccess(createdReservation))
     );
 
-  @Effect()
-  update$: Observable<Action> = this.actions$
-    .ofType(reservationsActions.UPDATE)
-    .map((action: reservationsActions.Update) => action.payload)
-    .switchMap((reservation) =>
-      this.reservationsService.update(reservation)
-        .map( (updatedReservation: Reservation) => new reservationsActions.UpdateSuccess(updatedReservation))
-    );
-
-  @Effect()
-  destroy$: Observable<Action> = this.actions$
-    .ofType(reservationsActions.DELETE)
-    .map((action: reservationsActions.Delete) => action.payload)
-    .switchMap((reservation) =>
-      this.reservationsService.destroy(reservation)
-        .map( () => new reservationsActions.DeleteSuccess(reservation))
-    );
+  // @Effect()
+  // update$: Observable<Action> = this.actions$
+  //   .ofType(reservationsActions.UPDATE)
+  //   .map((action: reservationsActions.Update) => action.payload)
+  //   .switchMap((reservation) =>
+  //     this.reservationsService.update(reservation)
+  //       .map( (updatedReservation: Reservation) => new reservationsActions.UpdateSuccess(updatedReservation))
+  //   );
+  //
+  // @Effect()
+  // destroy$: Observable<Action> = this.actions$
+  //   .ofType(reservationsActions.DELETE)
+  //   .map((action: reservationsActions.Delete) => action.payload)
+  //   .switchMap((reservation) =>
+  //     this.reservationsService.destroy(reservation)
+  //       .map( () => new reservationsActions.DeleteSuccess(reservation))
+  //   );
 
   constructor(
     private actions$: Actions,
