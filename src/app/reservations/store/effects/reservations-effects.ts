@@ -72,6 +72,4 @@ export class ReservationsEffects {
     private actions$: Actions,
     private reservationsService: ReservationsService
   ) {}
-
-
 }

@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../_shared';
 import { ContactComponent } from './pages/contact';
-import {ReactiveFormsModule} from '@angular/forms'
-import {HomeComponent} from './pages/home'
+import { ReactiveFormsModule } from '@angular/forms'
+import { HomeComponent } from './pages/home'
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { animation: 'home' } },

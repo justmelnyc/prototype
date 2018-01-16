@@ -18,22 +18,16 @@ import {Store} from 'store'
 @Component({
   selector: 'root',
   template: `
-   
-  <masthead [user]='user$ | async'
-            (logout)="onLogout()"></masthead>
-  
-  <!--<div style="position: absolute; left: 50%; top: 50%;" *ngIf="(user$ | async)?.authenticated">-->
+    <masthead [user]='user$ | async' (logout)="onLogout()"></masthead>
+    <!--<div style="position: absolute; left: 50%; top: 50%;" *ngIf="(user$ | async)?.authenticated">-->
     <!--<pre style="padding: 1em; z-index: 1000; position: relative; left: -50%; top: -50%; font-size: 1.2em;">{{ user$ | async | json}}</pre>-->
-  <!--</div>-->
-
-  <div [@routerAnimation]="getRouteAnimation(route)">
-    <router-outlet #route="outlet"></router-outlet>
-  </div>
-  <!--<foot></foot>-->
+    <!--</div>-->
+    <div [@routerAnimation]="getRouteAnimation(route)">
+      <router-outlet #route="outlet"></router-outlet>
+    </div>
+    <!--<foot></foot>-->
   `,
-  styles: [`
-   
-  `],
+  styles: [``],
   animations: [
     trigger('routerAnimation', [
       transition('* <=> *', [

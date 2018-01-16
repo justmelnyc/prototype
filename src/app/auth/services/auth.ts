@@ -8,7 +8,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import {AngularFireDatabase} from 'angularfire2/database'
 
-
 export interface User {
   email: string,
   uid: string,
@@ -20,8 +19,6 @@ export interface User {
 @Injectable()
 export class AuthServiceNew {
   testUser: User;
-
-  // authState: any = null;
 
   auth$ = this.af.authState
     .do(next => {
@@ -54,15 +51,14 @@ export class AuthServiceNew {
   }
 
   googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider();
     return this.socialSignIn(provider);
   }
 
   facebookLogin() {
-    const provider = new firebase.auth.FacebookAuthProvider()
+    const provider = new firebase.auth.FacebookAuthProvider();
     return this.socialSignIn(provider);
   }
-
 
   private socialSignIn(provider) {
     return this.af.auth.signInWithPopup(provider)
@@ -72,7 +68,6 @@ export class AuthServiceNew {
       })
       // .catch(error => console.log(error));
   }
-
 
   logoutUser() {
     return this.af.auth.signOut();
@@ -94,5 +89,4 @@ export class AuthServiceNew {
     this.db.object(path).update(data)
       .catch(error => console.log(error));
   }
-
 }

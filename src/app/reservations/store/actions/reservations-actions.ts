@@ -25,6 +25,7 @@ export class SetCurrentReservationId implements Action {
 
 export class LoadAll implements Action {
   readonly type = LOAD_ALL;
+  constructor() {}
 }
 
 export class Load implements Action {

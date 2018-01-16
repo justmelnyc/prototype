@@ -18,11 +18,9 @@ export class ReservationsService {
 
   constructor(private http: Http, private afAuth: AngularFireAuth,
               private db: AngularFireDatabase ) {
-
     this.afAuth.authState.subscribe(user => {
       if (user) this.uid = user.uid
     })
-
   }
 
   index() {
@@ -30,7 +28,11 @@ export class ReservationsService {
   }
 
   userIndex() {
-    return this.db.list(`${this.basePath}/${this.uid}`).valueChanges();
+    if (this.uid) {
+      return this.db.list(`${this.basePath}/${this.uid}`).valueChanges();
+    } else {
+      return [];
+    }
   }
   // showOne(): FirebaseListObservable<Reservation[]> {
   //   return this.firebase.database.list(`${this.basePath}/${this.authUid}`);
