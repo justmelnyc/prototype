@@ -5,16 +5,19 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { WordmarkComponent } from './wordmark/wordmark.component';
+import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule
   ],
-  declarations: [HeaderComponent, FooterComponent, WordmarkComponent],
+  declarations: [HeaderComponent, FooterComponent, WordmarkComponent, LogoComponent],
   exports: [
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    WordmarkComponent,
+    LogoComponent
   ]
 })
 export class LayoutModule { }
