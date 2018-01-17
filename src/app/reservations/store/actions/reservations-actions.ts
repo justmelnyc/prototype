@@ -61,7 +61,9 @@ export class LoadSuccess implements Action {
 
 export class CreateSuccess implements Action {
   readonly type = CREATE_SUCCESS;
-  constructor(public payload?: Reservation) {}
+  constructor(public payload?: Reservation) {
+    console.log('reservation-action-createSuccess = ', payload);
+  }
 }
 
 export class UpdateSuccess implements Action {

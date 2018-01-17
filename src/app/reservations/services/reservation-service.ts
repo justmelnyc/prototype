@@ -4,7 +4,7 @@ import {Reservation} from '../models/res'
 import {AngularFireAuth} from 'angularfire2/auth'
 import {AngularFireDatabase, AngularFireDatabaseModule, AngularFireList} from 'angularfire2/database'
 import {Http} from '@angular/http'
-
+import {Subscription} from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/map'
 
@@ -15,6 +15,7 @@ export class ReservationsService {
 
   private basePath = '/reservations';
   private uid: string;
+  newReservation$: Subscription = new Subscription();
 
   constructor(private http: Http, private afAuth: AngularFireAuth,
               private db: AngularFireDatabase ) {
@@ -31,7 +32,7 @@ export class ReservationsService {
     if (this.uid) {
       return this.db.list(`${this.basePath}/${this.uid}`).valueChanges();
     } else {
-      return [];
+      return Observable.of([]);
     }
   }
   // showOne(): FirebaseListObservable<Reservation[]> {
@@ -49,7 +50,11 @@ export class ReservationsService {
   }
 
   createReservation(reservation: Reservation) {
-    return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
+    delete reservation.$key;
+    console.log('createReservation = ', reservation);
+    const dbList = this.db.list(`${this.basePath}/${this.uid}`);
+    dbList.push(reservation);
+    return dbList.snapshotChanges();
   }
 
   // saveReservation(reservation: Reservation) {
@@ -74,5 +79,4 @@ export class ReservationsService {
   destroy(reservation: Reservation) {
     return this.db.list(`${this.basePath}`);
   }
-
 }

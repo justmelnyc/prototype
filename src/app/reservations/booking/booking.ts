@@ -25,7 +25,7 @@ import {ReservationsService} from '../services/reservation-service'
     </section>
     <reservation-form (onSubmit)="submitted($event)"></reservation-form>
   `,
-  styles: [`    
+  styles: [`
     .header-image {
       background-size: cover;
       background: linear-gradient(rgba(0, 0, 0, 0.29), rgba(0, 0, 0, 0.59)), url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?dpr?dpr=2&auto=format&fit=crop&w=1500&h=1011&q=80&cs=tinysrgb&crop=') center;
@@ -52,7 +52,7 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   submitted(reservation: Reservation) {
-    console.log(reservation)
+    console.log(reservation);
     // this.reservationService.createReservation(reservation)
     this.store.dispatch(new reservationsActions.Create(reservation));
   }
