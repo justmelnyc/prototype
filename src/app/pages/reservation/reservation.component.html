@@ -10,3 +10,49 @@
     </div>
   </div>
 </section>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <!--<tr class="reservation-row" *ngFor="let r of reservations">-->
+    <!--<th scope="row">{{r.$key}}</th>-->
+    <!--<td>{{r.name}}</td>-->
+    <!--<td>{{r.email}}</td>-->
+    <!--<td>{{r.phone}}</td>-->
+    <!--<td>-->
+
+      <!--<span class="float-right">-->
+
+        <!--<button (click)="showDetails(r)" class="button is-primary">-->
+          <!--DETAILS-->
+        <!--</button>-->
+
+        <!--<button (click)="editReservation(r)" class="button is-warning">-->
+          <!--EDIT-->
+        <!--</button>-->
+
+        <!--<button (click)="deleteReservation(r)" class="button is-danger">-->
+          <!--DELETE-->
+        <!--</button>-->
+
+      <!--</span>-->
+
+    <!--</td>-->
+  <!--</tr>-->
+
+  </tbody>
+
+</table>
+<!--<pre>{{reservations | json}}</pre>-->
+
+<ng-template #loading>
+  <span>loading reservations...</span>
+</ng-template>
