@@ -37,7 +37,7 @@
             <ng-template #alreadyLoggedIn>
               <div class="navbar-item has-dropdown is-right is-hoverable">
                 <a class="navbar-link is-active avatar is-right">
-                  <!--<img class="card-img-top" [src]="user?.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>-->
+                  <img class="card-img-top" [src]="user?.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
                 </a>
                 <div class="navbar-dropdown is-right">
                   <a class="navbar-item " [routerLink]="['reservations', 'booking']">
@@ -51,9 +51,9 @@
                     Test Log In
                   </a>
                   <hr class="navbar-divider">
-                  <!--<a class="navbar-item" (click)="logoutUser()">-->
-                    <!--Sign Out-->
-                  <!--</a>-->
+                  <a class="navbar-item" (click)="logoutUser()">
+                    Sign Out
+                  </a>
                 </div>
               </div>
             </ng-template>

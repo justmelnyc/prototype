@@ -16,7 +16,7 @@
             <div class="overlay-actions buttonSet">
               <div class="buttonSet buttonSet--vertical ">
                 <button aria-label="Connect with Facebook"
-                        (click)="signInWithSocial()"
+                        (click)="loginWithSocial('facebook')"
                         class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--facebook"
                         title="Connect with Facebook">
                       <span class="svgIcon svgIcon--facebookFilled svgIcon--25px">
@@ -30,7 +30,7 @@
                           <span class="u-fontSize12 u-textColorTransparentWhiteDark">We won’t post without asking</span></span>
                   </div>
                 </button>
-                <button aria-label="Connect with Google" (click)="signInWithSocial()"
+                <button aria-label="Connect with Google" (click)="loginWithSocial('google')"
                         class="button button--withChrome button--withIcon button--withSvgIcon button--withIconAndLabel button button--signin button--continue button--google"
                         title="Connect with Google">
                       <span class="svgIcon svgIcon--googleNew svgIcon--25px">
