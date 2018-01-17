@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { SharedService } from '../../../_core/services/shared.service';
@@ -30,6 +30,12 @@ import {
   subWeeks
 } from 'date-fns';
 
+export enum EPageType {
+  CreatePage,
+  EditPage,
+  ViewPage
+}
+
 @Component({
   selector: 'app-reservation-booking',
   templateUrl: './reservation-booking.component.html',
@@ -42,6 +48,10 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
   maxDate: Date = addWeeks(new Date(), 2);
   viewDate: Date = new Date();
   reservation: IReservation = {name: '', email: '', reservationDate: '', phone: ''};
+  uid = '';
+
+  enum_PageType = EPageType;
+  pageType: EPageType = EPageType.CreatePage;
 
   form: FormGroup;
 
@@ -50,7 +60,8 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
     private afAuth: AngularFireAuth,
     private afDB: AngularFireDatabase,
     private router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     this.dayModifier = function (day: Date): string {
       if (!this.dateIsValid(day)) {
@@ -69,11 +80,39 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      if (params.method === 'edit') {
+        this.pageType = EPageType.EditPage;
+        this.getReservation(params.id);
+      } else if (params.method === 'view') {
+        this.pageType = EPageType.ViewPage;
+        this.getReservation(params.id);
+      } else {
+        this.pageType = EPageType.CreatePage;
+      }
+    });
   }
 
   ngOnChanges() {
     if (this.reservation) {
       this.form.patchValue(this.reservation);
+    }
+  }
+
+  async getReservation(id: string) {
+    try {
+      const user = this.sharedService.getUser();
+      if (!user) {
+        await this.afAuth.authState.first().toPromise();
+        this.uid = await this.afAuth.auth.currentUser.uid;
+      } else {
+        this.uid = user.id;
+      }
+      this.reservation = await this.afDB.object(`reservations/${this.uid}/${id}`).valueChanges().first().toPromise() as IReservation;
+      if (this.reservation) {
+        this.form.setValue({...this.reservation});
+      }
+    } catch (e) {
     }
   }
 
@@ -87,7 +126,11 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
       } else {
         uid = user.id;
       }
-      const res = await this.afDB.list(`reservations/${uid}`).push(this.form.value);
+      if (this.pageType === EPageType.CreatePage) {
+        await this.afDB.list(`reservations/${uid}`).push(this.form.value);
+      } else if (this.pageType === EPageType.EditPage) {
+        await this.afDB.object(`reservations/${uid}/${this.reservation.$key}`).update(this.form.value);
+      }
       this.router.navigate(['/reservations']);
     } catch (e) {
       console.log(e);

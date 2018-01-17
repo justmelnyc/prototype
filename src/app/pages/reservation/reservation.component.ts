@@ -54,8 +54,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.listing$.unsubscribe();
   }
 
-  showDetails() {
-
+  showDetails(res: IReservation) {
+    this.router.navigate(['/reservations/view/' + res.$key]);
   }
 
   editReservation(res: IReservation) {

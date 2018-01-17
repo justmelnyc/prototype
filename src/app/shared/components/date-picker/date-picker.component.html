@@ -45,10 +45,10 @@
       </div>
     </div>
     <div class="buttonSet clearfix" style="padding: 20px 0">
-      <button (click)="gotoPrev()" [ngClass]="{disabled: dayShowIndex < 5}"
+      <button type="button" (click)="gotoPrev()" [ngClass]="{disabled: dayShowIndex < 5}"
               style="float: left"
               class="button button--withChrome u-baseColor--buttonNormal">Prev 5 Days</button>
-      <button (click)="gotoNext()" [ngClass]="{disabled: dayShowIndex >= 15}"
+      <button type="button" (click)="gotoNext()" [ngClass]="{disabled: dayShowIndex >= 15}"
               style="float: right"
               class="button button--withChrome u-baseColor--buttonNormal">Next 5 Days</button>
     </div>
