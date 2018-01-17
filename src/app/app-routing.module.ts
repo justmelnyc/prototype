@@ -5,7 +5,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
 const routes: Routes = [
   {path: '', loadChildren: './pages/home/home.module#HomeModule', data: {animation: 'home'}},
   {path: 'contact', loadChildren: './pages/contact/contact.module#ContactModule', data: {animation: 'contact'}},
-  {path: 'login', component: LoginComponent, data: {animation: 'login'}}
+  {path: 'login', component: LoginComponent, data: {animation: 'login'}},
+  {path: 'reservations', loadChildren: './pages/reservation/reservation.module#ReservationModule', data: {animation: 'reservations'}}
 ];
 
 @NgModule({
