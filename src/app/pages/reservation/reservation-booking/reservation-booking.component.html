@@ -14,11 +14,11 @@
 <section class="section">
   <p class="has-text-centered">Reservation Form goes here.</p>
   <div class="columns content is-centered">
-    <form class="column is-half form" #bookingForm="ngForm" (ngSubmit)="onSubmit()">
+    <form class="column is-half form" novalidate (submit)="onSubmit()" [formGroup]="form">
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input class="input" type="text" placeholder="Your full name" name="bookingName" [(ngModel)]="reservation.name" required>
+          <input class="input" type="text" placeholder="Your full name" name="bookingName" formControlName="name">
         </div>
       </div>
 
@@ -26,23 +26,24 @@
         <label class="label">Email</label>
         <div class="control">
           <!--is-danger when invalid -->
-          <input class="input" type="email" placeholder="Enter a valid email" name="bookingEmail" [(ngModel)]="reservation.email" email #emailInput="ngModel" required>
+          <input class="input" type="email" placeholder="Enter a valid email" name="bookingEmail" formControlName="email" email>
         </div>
-        <p class="help is-danger" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">This email is invalid</p>
+        <!--<p class="help is-danger">This email is invalid</p>-->
       </div>
 
 
       <div class="field">
-        <!--<day-picker formControlName="reservationDate" [parent]="form"-->
-                    <!--[dayModifier]="dayModifier"-->
-                    <!--[viewDate]="viewDate"-->
-                    <!--(dayClicked)="dayClicked($event.day)">-->
-        <!--</day-picker>-->
+        <app-date-picker
+          formControlName="reservationDate" [parent]="form"
+          [dayModifier]="dayModifier"
+          [viewDate]="viewDate"
+          (dayClicked)="dayClicked($event.day)">
+        </app-date-picker>
       </div>
 
       <div class="field" style="margin: 1em 0">
         <div class="control">
-          <button class="button is-primary" [disabled]="!bookingForm.form.valid">Submit</button>
+          <button class="button is-primary" [disabled]="!form.valid">Submit</button>
         </div>
       </div>
     </form>

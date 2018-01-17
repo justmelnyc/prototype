@@ -17,36 +17,36 @@
     <th>#</th>
     <th>Name</th>
     <th>Email</th>
-    <th>Phone</th>
+    <th>Date</th>
     <th></th>
   </tr>
   </thead>
   <tbody>
-  <!--<tr class="reservation-row" *ngFor="let r of reservations">-->
-    <!--<th scope="row">{{r.$key}}</th>-->
-    <!--<td>{{r.name}}</td>-->
-    <!--<td>{{r.email}}</td>-->
-    <!--<td>{{r.phone}}</td>-->
-    <!--<td>-->
+    <tr class="reservation-row" *ngFor="let r of reservations; let i = index">
+      <th scope="row">{{i + 1}}</th>
+      <td>{{r.name}}</td>
+      <td>{{r.email}}</td>
+      <td>{{r.reservationDate}}</td>
+      <td>
 
-      <!--<span class="float-right">-->
+        <span class="float-right">
 
-        <!--<button (click)="showDetails(r)" class="button is-primary">-->
-          <!--DETAILS-->
-        <!--</button>-->
+          <button (click)="showDetails(r)" class="button is-primary">
+            DETAILS
+          </button>
 
-        <!--<button (click)="editReservation(r)" class="button is-warning">-->
-          <!--EDIT-->
-        <!--</button>-->
+          <button (click)="editReservation(r)" class="button is-warning">
+            EDIT
+          </button>
 
-        <!--<button (click)="deleteReservation(r)" class="button is-danger">-->
-          <!--DELETE-->
-        <!--</button>-->
+          <button (click)="deleteReservation(r)" class="button is-danger">
+            DELETE
+          </button>
 
-      <!--</span>-->
+        </span>
 
-    <!--</td>-->
-  <!--</tr>-->
+      </td>
+    </tr>
 
   </tbody>
 

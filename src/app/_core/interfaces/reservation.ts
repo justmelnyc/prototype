@@ -1,7 +1,7 @@
 export interface IReservation {
-  id?: number;
   name: string;
   email: string;
-  date?: string;
+  reservationDate: string;
   phone?: string;
+  $key?: string;
 }
