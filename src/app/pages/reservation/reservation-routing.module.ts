@@ -6,7 +6,7 @@ import { ReservationBookingComponent } from './reservation-booking/reservation-b
 
 const routes: Routes = [
   {path: '', component: ReservationComponent, data: {title: 'Reservations'}},
-  {path: 'add', component: ReservationBookingComponent, data: {title: 'Reservations'}},
+  {path: 'booking', component: ReservationBookingComponent, data: {title: 'Reservations'}},
   {path: 'edit/:id', component: ReservationBookingComponent, data: {title: 'Reservations'}},
 ];
 

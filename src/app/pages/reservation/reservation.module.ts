@@ -9,6 +9,7 @@ import { ReservationBookingComponent } from './reservation-booking/reservation-b
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ReservationRoutingModule
   ],
   declarations: [ReservationComponent, ReservationBookingComponent]

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { SharedService } from '../../../_core/services/shared.service';
+import { IReservation } from '../../../_core/interfaces/reservation';
+import { IUser } from '../../../_core/interfaces/user';
 
 @Component({
   selector: 'app-reservation-booking',
@@ -8,9 +12,31 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ReservationBookingComponent implements OnInit {
 
-  constructor() { }
+  reservation: IReservation = {id: 0, name: '', email: '', date: '', phone: ''};
+
+  constructor(
+    private sharedService: SharedService,
+    private afAuth: AngularFireAuth,
+    private afDB: AngularFireDatabase
+  ) { }
 
   ngOnInit() {
+  }
+
+  async onSubmit() {
+    try {
+      const user: IUser = this.sharedService.getUser();
+      if (user.id) {
+
+      } else {
+        await this.afAuth.authState.first().toPromise();
+        const uid = this.afAuth.auth.currentUser.uid;
+      }
+    } catch (e) {
+
+    } finally {
+
+    }
   }
 
 }

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         await this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
       }
       const currentUser = await this.afAuth.auth.currentUser;
-      const user: IUser = {name: currentUser.displayName, email: currentUser.email, photo: currentUser.photoURL};
+      const user: IUser = {id: currentUser.uid, name: currentUser.displayName, email: currentUser.email, photo: currentUser.photoURL};
 
       const db = await this.afDB.object(`users/${currentUser.uid}`).valueChanges().first().toPromise();
       if (!db) {
