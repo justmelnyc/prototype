@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { LayoutModule } from './layout/layout.module';
 import { AuthModule } from './pages/auth/auth.module';
+import { ProfileModule } from './pages/profile/profile.module';
+import { UsersModule } from './pages/users/users.module';
 
 import { AppComponent } from './app.component';
 
@@ -29,7 +31,9 @@ import { AppComponent } from './app.component';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     LayoutModule,
-    AuthModule
+    AuthModule,
+    ProfileModule,
+    UsersModule
   ],
   providers: [AuthGuard, SharedService],
   bootstrap: [AppComponent]
