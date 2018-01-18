@@ -47,7 +47,7 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
   minDate: Date = subDays(new Date(), 1);
   maxDate: Date = addWeeks(new Date(), 2);
   viewDate: Date = new Date();
-  reservation: IReservation = {name: '', email: '', reservationDate: '', phone: ''};
+  reservation: IReservation = {name: '', email: '', reservationDate: this.viewDate.toDateString(), phone: ''};
   uid = '';
 
   enum_PageType = EPageType;
@@ -110,6 +110,7 @@ export class ReservationBookingComponent implements OnInit, OnChanges {
       }
       this.reservation = await this.afDB.object(`reservations/${this.uid}/${id}`).valueChanges().first().toPromise() as IReservation;
       if (this.reservation) {
+        this.reservation.$key = id;
         this.form.setValue({...this.reservation});
       }
     } catch (e) {
