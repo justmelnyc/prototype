@@ -11,8 +11,7 @@ export class SharedService {
 
   constructor() { }
 
-  storeUser(user: IUser)
-  {
+  storeUser(user: IUser) {
     this.userInfo = user;
     this.user.next(user);
   }
