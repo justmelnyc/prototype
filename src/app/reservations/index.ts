@@ -20,33 +20,32 @@ const COMPONENTS = [ReservationFormComponent, BookingComponent, ReservationsInde
 
 const routes: Routes = [
   { path: '',
-  children: [
-  {
-    path: '',
-    component: ReservationsIndexComponent,
-    data: {title: 'Reservations'},
-    resolve: {title: TitleResolver}
-  },
-  {
-    path: 'booking',
-    component: BookingComponent,
-    data: {title: 'New Reservation'},
-    resolve: {title: TitleResolver}
-  },
-  {
-    path: ':id',
-    component: BookingComponent,
-    data: {title: 'Reservation Detail'},
-    resolve: {title: TitleResolver}
-  },
-  {
-    path: ':id/edit',
-    component: BookingComponent,
-    data: {title: 'Reschedule'},
-    resolve: {title: TitleResolver}
+    children: [
+    {
+      path: '',
+      component: ReservationsIndexComponent,
+      data: {title: 'Reservations'},
+      resolve: {title: TitleResolver}
+    },
+    {
+      path: 'booking',
+      component: BookingComponent,
+      data: {title: 'New Reservation'},
+      resolve: {title: TitleResolver}
+    },
+    {
+      path: ':id',
+      component: BookingComponent,
+      data: {title: 'Reservation Detail'},
+      resolve: {title: TitleResolver}
+    },
+    {
+      path: ':id/edit',
+      component: BookingComponent,
+      data: {title: 'Reschedule'},
+      resolve: {title: TitleResolver}
+    }]
   }
-]
-}
 ];
 
 @NgModule({

@@ -31,41 +31,41 @@ import {
   selector: 'reservation-form',
   template: `
     <section class="section">
-    <p class="has-text-centered">Reservation Form goes here.</p>
-    <div class="columns content is-centered">
-    <form class="column is-half form" novalidate (submit)="submit()" [formGroup]="form" >
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Your full name" formControlName="name">
-        </div>
-      </div>
+      <p class="has-text-centered">Reservation Form goes here.</p>
+      <div class="columns content is-centered">
+        <form class="column is-half form" novalidate (submit)="submit()" [formGroup]="form">
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Your full name" formControlName="name">
+            </div>
+          </div>
 
-      <div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-          <!--is-danger when invalid -->
-          <input class="input" type="text" placeholder="Enter a valid email" formControlName="email">
-        </div>
-        <!--<p class="help is-danger">This email is invalid</p>-->
-      </div>
-     
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <!--is-danger when invalid -->
+              <input class="input" type="text" placeholder="Enter a valid email" formControlName="email">
+            </div>
+            <!--<p class="help is-danger">This email is invalid</p>-->
+          </div>
 
-      <div class="field">
-        <day-picker formControlName="reservationDate" [parent]="form"
-                    [dayModifier]="dayModifier"
-                    [viewDate]="viewDate"
-                    (dayClicked)="dayClicked($event.day)">
-        </day-picker>
-      </div>
 
-      <div class="field" style="margin: 1em 0">
-        <div class="control">
-          <button class="button is-primary" type="submit" [disabled]="!form.valid">Submit</button>
-        </div>
+          <div class="field">
+            <day-picker formControlName="reservationDate" [parent]="form"
+                        [dayModifier]="dayModifier"
+                        [viewDate]="viewDate"
+                        (dayClicked)="dayClicked($event.day)">
+            </day-picker>
+          </div>
+
+          <div class="field" style="margin: 1em 0">
+            <div class="control">
+              <button class="button is-primary" type="submit" [disabled]="!form.valid">Submit</button>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-    </div>
     </section>
   `,
   styles: [`
@@ -111,7 +111,7 @@ export class ReservationFormComponent implements OnInit, OnChanges {
 
     this.form = this.formBuilder.group({
       '$key': [this.reservation.$key],
-      'reservationDate' : [this.reservation.reservationDate],
+      'reservationDate': [this.reservation.reservationDate],
       'name': [this.reservation.name, Validators.required],
       'email': [this.reservation.email, Validators.required]
     })
@@ -146,7 +146,7 @@ export class ReservationFormComponent implements OnInit, OnChanges {
     // } else if (this.viewDate > this.maxDate) {
     //   this.changeDate(this.maxDate);
     // }
-    console.log('this')
+    // console.log('this')
   }
 
   changeDate(date: Date): void {

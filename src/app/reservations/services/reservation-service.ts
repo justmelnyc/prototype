@@ -51,7 +51,6 @@ export class ReservationsService {
 
   createReservation(reservation: Reservation) {
     delete reservation.$key;
-    console.log('createReservation = ', reservation);
     return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
   }
 

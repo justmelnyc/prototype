@@ -44,8 +44,6 @@ export class ReservationsIndexComponent implements OnInit {
   constructor(public store: Store<fromRootStore.State>, private router: Router, private actR: ActivatedRoute) { }
 
   ngOnInit() {
-    // getAllReservations selector from the main store allows us to monitor changes only on contact list from the main state
-    // without monitoring the rest of the state
     this.reservations$ = this.store.select(fromReservationsStore.getAllReservations);
     this.store.dispatch(new reservationsActions.LoadAll());
   }

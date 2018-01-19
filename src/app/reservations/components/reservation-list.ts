@@ -10,41 +10,33 @@ import {Reservation} from '../models/res'
         <th>#</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Phone</th>
+        <th>Date</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr class="reservation-row" *ngFor="let r of reservations">
-        <th scope="row">{{r.$key}}</th>
+      <tr class="reservation-row" *ngFor="let r of reservations; let i = index">
+        <th scope="row">{{i + 1}}</th>
         <td>{{r.name}}</td>
         <td>{{r.email}}</td>
-        <td>{{r.phone}}</td>
+        <td>{{r.reservationDate}}</td>
         <td>
-
-      <span class="float-right">
-
-        <button (click)="showDetails(r)" class="button is-primary">
-          DETAILS
-        </button>
-
-        <button (click)="editReservation(r)" class="button is-warning">
-          EDIT
-        </button>
-
-        <button (click)="deleteReservation(r)" class="button is-danger">
-          DELETE
-        </button>
-
-      </span>
-
+          <span class="float-right">
+            <button (click)="showDetails(r)" class="button is-primary">
+              DETAILS
+            </button>
+            <button (click)="editReservation(r)" class="button is-warning">
+              EDIT
+            </button>
+            <button (click)="deleteReservation(r)" class="button is-danger">
+              DELETE
+            </button>
+          </span>
         </td>
       </tr>
-
       </tbody>
-
     </table>
-    <pre>{{reservations | json}}</pre>
+
     <ng-template #loading>
       <span>loading reservations...</span>
     </ng-template>
@@ -54,7 +46,6 @@ import {Reservation} from '../models/res'
 })
 export class ReservationsListComponent implements OnInit {
 
-
   @Input() reservations: Reservation[];
   @Output() onEdit = new EventEmitter<Reservation>();
   @Output() onShow = new EventEmitter<Reservation>();
@@ -63,7 +54,6 @@ export class ReservationsListComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
 
   showDetails(reservation: Reservation) {
     this.onShow.emit(reservation);
