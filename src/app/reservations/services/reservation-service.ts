@@ -52,9 +52,7 @@ export class ReservationsService {
   createReservation(reservation: Reservation) {
     delete reservation.$key;
     console.log('createReservation = ', reservation);
-    const dbList = this.db.list(`${this.basePath}/${this.uid}`);
-    dbList.push(reservation);
-    return dbList.snapshotChanges();
+    return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
   }
 
   // saveReservation(reservation: Reservation) {
@@ -73,7 +71,9 @@ export class ReservationsService {
   // }
 
   update(reservation: Reservation) {
-    return this.db.list(`${this.basePath}`);
+    console.log(reservation);
+    return this.db.list(`${this.basePath}/${this.uid}`).update(reservation.$key, reservation);
+    // this.afDB.object(`reservations/${uid}/${this.reservation.$key}`).update(this.form.value);
   }
 
   destroy(reservation: Reservation) {

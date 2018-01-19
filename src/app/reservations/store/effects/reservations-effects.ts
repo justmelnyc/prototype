@@ -45,23 +45,20 @@ export class ReservationsEffects {
   create$: Observable<Action> = this.actions$
     .ofType(reservationsActions.CREATE)
     .map((action: reservationsActions.Create) => action.payload)
-    .switchMap((reservation) => {
-      this.reservationsService.createReservation(reservation)
-        .subscribe(reservations => {
-            reservations.map(createdReservation => new reservationsActions.CreateSuccess(createdReservation))
-          }
-        )
-    });
+    .switchMap((reservation) =>
+      Observable.fromPromise(this.reservationsService.createReservation(reservation))
+        .map((createdReservation: Reservation) => new reservationsActions.CreateSuccess(createdReservation))
+    );
 
   // @Effect()
   // update$: Observable<Action> = this.actions$
   //   .ofType(reservationsActions.UPDATE)
   //   .map((action: reservationsActions.Update) => action.payload)
   //   .switchMap((reservation) =>
-  //     this.reservationsService.update(reservation)
-  //       .map( (updatedReservation: Reservation) => new reservationsActions.UpdateSuccess(updatedReservation))
+  //     Observable.fromPromise(this.reservationsService.update(reservation))
+  //       .map((updatedReservation: Reservation) => new reservationsActions.UpdateSuccess(updatedReservation))
   //   );
-  //
+
   // @Effect()
   // destroy$: Observable<Action> = this.actions$
   //   .ofType(reservationsActions.DELETE)
