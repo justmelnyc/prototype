@@ -10,6 +10,12 @@ import * as fromRootStore from '../../_store';
 import {Reservation} from '../models/res'
 import {ReservationsService} from '../services/reservation-service'
 
+export enum EPageType {
+  CreatePage,
+  EditPage,
+  ViewPage
+}
+
 @Component({
   selector: 'booking',
   template: `
@@ -37,9 +43,10 @@ import {ReservationsService} from '../services/reservation-service'
 
 export class BookingComponent implements OnInit, OnDestroy {
   createReservationSub: Subscription;
-  editReservationSub: Subscription;
+  loadReservationSub: Subscription;
   isEditable: boolean;
   reservation$: Observable<Reservation>;
+  pageType: EPageType = EPageType.CreatePage;
 
   constructor(
     private store: Store<fromRootStore.State>,
@@ -51,9 +58,11 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(params => {
       if (params.method === 'edit') {
         this.isEditable = true;
+        this.pageType = EPageType.EditPage;
         this.getReservation(params.id);
       } else if (params.method === 'view') {
         this.isEditable = false;
+        this.pageType = EPageType.ViewPage;
         this.getReservation(params.id);
       } else {
         this.isEditable = true;
@@ -70,7 +79,7 @@ export class BookingComponent implements OnInit, OnDestroy {
         this.router.navigate(['/reservations']);
       });
 
-    this.editReservationSub = this.actionsSubject
+    this.loadReservationSub = this.actionsSubject
       .asObservable()
       .filter(action => action.type === reservationsActions.LOAD_SUCCESS)
       .subscribe((action: reservationsActions.LOAD_SUCCESS) => {
@@ -79,11 +88,16 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.redirectSub.unsubscribe();
+    this.createReservationSub.unsubscribe();
+    this.loadReservationSub.unsubscribe();
   }
 
   submitted(reservation: Reservation) {
-    this.store.dispatch(new reservationsActions.Create(reservation));
+    if (this.pageType === EPageType.CreatePage) {
+      this.store.dispatch(new reservationsActions.Create(reservation));
+    } else if (this.pageType === EPageType.EditPage) {
+      this.store.dispatch(new reservationsActions.Update(reservation))
+    }
   }
 
   getReservation(reservationId: string) {

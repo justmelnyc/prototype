@@ -45,7 +45,6 @@ export class ReservationsIndexComponent implements OnInit {
 
   ngOnInit() {
     this.reservations$ = this.store.select(fromReservationsStore.getAllReservations);
-    console.log('reservations = ', this.reservations$);
     this.store.dispatch(new reservationsActions.LoadAll());
   }
 
@@ -63,6 +62,7 @@ export class ReservationsIndexComponent implements OnInit {
     const r = confirm('Are you sure?');
     if (r) {
       this.store.dispatch(new reservationsActions.Delete(reservation));
+      this.store.dispatch(new reservationsActions.LoadAll());
     }
   }
 }

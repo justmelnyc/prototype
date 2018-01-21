@@ -42,15 +42,6 @@ export class ReservationsService {
       return Observable.of([]);
     }
   }
-  // showOne(): FirebaseListObservable<Reservation[]> {
-  //   return this.firebase.database.list(`${this.basePath}/${this.authUid}`);
-  // }
-
-  // getItemsList(): FirebaseListObservable<Item[]> {
-  //   if (!this.userId) return;
-  //   this.items = this.db.list(`items/${this.userId}`);
-  //   return this.items
-  // }
 
   show(reservationId: string) {
     return this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).valueChanges();
@@ -61,27 +52,14 @@ export class ReservationsService {
     return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
   }
 
-  // saveReservation(reservation: Reservation) {
-  //   this.db.list(`${this.basePath}/${this.uid}`).push(reservation).then(
-  //     (res) => {  // success
-  //       this.store.dispatch(this.reservationsActions.CreateSuccess(createdReservation));
-  //     },
-  //     (error: Error) => {// error
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-
-  // create(reservation: Reservation) {
-  //   return this.db.push(`${this.basePath}/`);
-  // }
-
-  update(reservation: Reservation) {
-    return this.db.list(`${this.basePath}/${this.uid}`).update(reservation.$key, reservation);
-    // this.afDB.object(`reservations/${uid}/${this.reservation.$key}`).update(this.form.value);
+  updateReservation(reservation: Reservation) {
+    const reservationId = reservation.$key;
+    delete reservation.$key;
+    return this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).update(reservation);
   }
 
   destroy(reservation: Reservation) {
-    return this.db.list(`${this.basePath}`);
+    const reservationId = reservation.$key;
+    return this.db.list(`${this.basePath}/${this.uid}/${reservationId}`).remove();
   }
 }
