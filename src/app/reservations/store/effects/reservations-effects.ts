@@ -21,31 +21,30 @@ export class ReservationsEffects {
     .ofType(reservationsActions.LOAD_ALL) /* When [Reservations] LOAD ALL action is dispatched */
     .startWith(new reservationsActions.LoadAll())
     .switchMap(() =>
-      this.reservationsService.userIndex() /* Hit the Reservations Index endpoint of our REST API */
-      /* Dispatch LoadAllSuccess action to the central store with reservation list returned by the backend as payload*/
-      /* 'Contacts Reducers' will take care of the rest */
+      this.reservationsService.userIndex()
         .map((reservations: Reservation[]) => new reservationsActions.LoadAllSuccess(reservations))
     );
 
-  // @Effect()
-  // load$: Observable<Action> = this.actions$
-  //   .ofType(reservationsActions.LOAD)
-  //   .map( (action: reservationsActions.Load ) => action.payload)
-  //   .switchMap((id) =>
-  //     this.reservationsService.show(id)
-  //       .mergeMap( (reservation: Reservation[]) => {
-  //         return [
-  //           new reservationsActions.LoadSuccess(reservation),
-  //           new reservationsActions.SetCurrentReservationId(reservation)
-  //         ]
-  //       })
-  //   );
+  @Effect()
+  load$: Observable<Action> = this.actions$
+    .ofType(reservationsActions.LOAD)
+    .map( (action: reservationsActions.Load ) => action.payload)
+    .switchMap((id) =>
+      this.reservationsService.show(id)
+        // .map((reservation: Reservation) => new reservationsActions.LoadSuccess(reservation))
+        .mergeMap( (reservation: Reservation) => {
+          return [
+            new reservationsActions.LoadSuccess({$key: id, ...reservation}),
+            new reservationsActions.SetCurrentReservationId(id)
+          ]
+        })
+    );
 
   @Effect()
   create$: Observable<Action> = this.actions$
     .ofType(reservationsActions.CREATE)
     .map((action: reservationsActions.Create) => action.payload)
-    .switchMap((reservation) =>
+    .switchMap(reservation =>
       Observable.fromPromise(this.reservationsService.createReservation(reservation))
         .map((createdReservation: Reservation) => new reservationsActions.CreateSuccess(createdReservation))
     );

@@ -15,6 +15,7 @@ import {ReservationsListComponent, ReservationFormComponent} from './components'
 import {ReservationsIndexComponent} from './reservations/reservations'
 import {ReactiveFormsModule} from '@angular/forms'
 import {DayPickerComponent} from './components/wizard/day-picker'
+import {} from './'
 
 const COMPONENTS = [ReservationFormComponent, BookingComponent, ReservationsIndexComponent, ReservationsListComponent, DayPickerComponent ]
 
@@ -40,7 +41,7 @@ const routes: Routes = [
       resolve: {title: TitleResolver}
     },
     {
-      path: ':id/edit',
+      path: ':method/:id',
       component: BookingComponent,
       data: {title: 'Reschedule'},
       resolve: {title: TitleResolver}

@@ -29,8 +29,15 @@ export class ReservationsService {
   }
 
   userIndex() {
+    const reservations: Reservation[] = [];
     if (this.uid) {
-      return this.db.list(`${this.basePath}/${this.uid}`).valueChanges();
+      return this.db.list(`${this.basePath}/${this.uid}`).snapshotChanges()
+        .map(items => {
+          items.map(item => {
+            reservations.push({$key: item.key, ...item.payload.val()});
+          });
+          return reservations;
+        });
     } else {
       return Observable.of([]);
     }
@@ -46,7 +53,7 @@ export class ReservationsService {
   // }
 
   show(reservationId: string) {
-    return this.db.list(`${this.basePath}`).valueChanges();
+    return this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).valueChanges();
   }
 
   createReservation(reservation: Reservation) {
@@ -70,7 +77,6 @@ export class ReservationsService {
   // }
 
   update(reservation: Reservation) {
-    console.log(reservation);
     return this.db.list(`${this.basePath}/${this.uid}`).update(reservation.$key, reservation);
     // this.afDB.object(`reservations/${uid}/${this.reservation.$key}`).update(this.form.value);
   }

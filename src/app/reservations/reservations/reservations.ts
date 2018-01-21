@@ -45,17 +45,18 @@ export class ReservationsIndexComponent implements OnInit {
 
   ngOnInit() {
     this.reservations$ = this.store.select(fromReservationsStore.getAllReservations);
+    console.log('reservations = ', this.reservations$);
     this.store.dispatch(new reservationsActions.LoadAll());
   }
 
   editReservation(reservation: Reservation) {
     this.store.dispatch(new reservationsActions.SetCurrentReservationId(reservation.$key));
-    this.router.navigate(['/reservations', reservation.$key, 'edit'])
+    this.router.navigate(['/reservations/edit/' + reservation.$key]);
   }
 
   showReservation(reservation: Reservation) {
     this.store.dispatch(new reservationsActions.SetCurrentReservationId(reservation.$key));
-    this.router.navigate(['/reservations', reservation.$key])
+    this.router.navigate(['/reservations/view/' + reservation.$key]);
   }
 
   deleteReservation(reservation: Reservation) {
@@ -64,5 +65,4 @@ export class ReservationsIndexComponent implements OnInit {
       this.store.dispatch(new reservationsActions.Delete(reservation));
     }
   }
-
 }

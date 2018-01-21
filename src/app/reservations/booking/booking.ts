@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {ActionsSubject, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
+import * as fromReservationsStore from '../store'
 import * as reservationsActions from '../store/actions/reservations-actions'
 import * as fromRootStore from '../../_store';
 import {Reservation} from '../models/res'
@@ -23,7 +25,7 @@ import {ReservationsService} from '../services/reservation-service'
         </div>
       </div>
     </section>
-    <reservation-form (onSubmit)="submitted($event)"></reservation-form>
+    <reservation-form [reservation]="reservation$ | async" (onSubmit)="submitted($event)" [isEditable]="isEditable"></reservation-form>
   `,
   styles: [`
     .header-image {
@@ -32,22 +34,48 @@ import {ReservationsService} from '../services/reservation-service'
     }
   `]
 })
-export class BookingComponent implements OnInit, OnDestroy {
-  redirectSub: Subscription;
 
-  constructor(private store: Store<fromRootStore.State>,
-              private router: Router,
-              private reservationService: ReservationsService,
-              private actionsSubject: ActionsSubject) { }
+export class BookingComponent implements OnInit, OnDestroy {
+  createReservationSub: Subscription;
+  editReservationSub: Subscription;
+  isEditable: boolean;
+  reservation$: Observable<Reservation>;
+
+  constructor(
+    private store: Store<fromRootStore.State>,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private reservationService: ReservationsService,
+    private actionsSubject: ActionsSubject
+  ) {
+    this.activatedRoute.params.subscribe(params => {
+      if (params.method === 'edit') {
+        this.isEditable = true;
+        this.getReservation(params.id);
+      } else if (params.method === 'view') {
+        this.isEditable = false;
+        this.getReservation(params.id);
+      } else {
+        this.isEditable = true;
+        this.pageType = EPageType.CreatePage;
+      }
+    });
+  }
 
   ngOnInit() {
-    this.redirectSub = this.actionsSubject
+    this.createReservationSub = this.actionsSubject
       .asObservable()
       .filter(action => action.type === reservationsActions.CREATE_SUCCESS)
       .subscribe((action: reservationsActions.CreateSuccess) => {
-        console.log('create reservation success');
         this.router.navigate(['/reservations']);
       });
+
+    this.editReservationSub = this.actionsSubject
+      .asObservable()
+      .filter(action => action.type === reservationsActions.LOAD_SUCCESS)
+      .subscribe((action: reservationsActions.LOAD_SUCCESS) => {
+        this.reservation$ = this.store.select(fromReservationsStore.getCurrentReservation);
+      })
   }
 
   ngOnDestroy() {
@@ -55,9 +83,10 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   submitted(reservation: Reservation) {
-    console.log(reservation);
-    // this.reservationService.createReservation(reservation)
     this.store.dispatch(new reservationsActions.Create(reservation));
   }
 
+  getReservation(reservationId: string) {
+    this.store.dispatch(new reservationsActions.Load(reservationId));
+  }
 }

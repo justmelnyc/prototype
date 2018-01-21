@@ -16,7 +16,6 @@ export const INIT_RESERVATIONS_STATE: State = {
 export function reducer(state: State = INIT_RESERVATIONS_STATE, action: reservationsActions.All) {
 
   switch (action.type) {
-
     case reservationsActions.SET_CURRENT_RESERVATION_ID : {
       return Object.assign(
         {},
@@ -52,17 +51,14 @@ export function reducer(state: State = INIT_RESERVATIONS_STATE, action: reservat
     default: {
       return state;
     }
-
   }
 }
 
 // Action Handlers (all handlers must be pure functions)
 
 function handleReservationLoad(state: State, payload: Reservation): State {
-
   const newState = Object.assign({}, state);
   newState.reservationList = _.unionBy([payload], newState.reservationList, 'id');
-
   return newState; // return new contacts state without modifying the input
 }
 
@@ -74,12 +70,9 @@ function handleReservationCreate(state: State, payload: Reservation): State {
 
 
 function handleReservationUpdate(state: State, payload: Reservation): State {
-
   const newState = Object.assign({}, state);
   newState.reservationList = _.unionBy([payload], newState.reservationList, 'id');
-
   return newState;
-
 }
 
 
@@ -94,5 +87,5 @@ function handleReservationDelete(state: State, payload: Reservation ): State {
 
 export const getCurrentReservationId = (state: State): string => state.currentReservationId;
 export const getAllReservations = (state: State): Reservation[] => state.reservationList;
-export const getReservationById = (reservations: Reservation[], id: string): Reservation => _.find(reservations, {id});
+export const getReservationById = (reservations: Reservation[], id: string): Reservation => _.find(reservations, {$key: id});
 export const getCurrentReservation = createSelector(getAllReservations, getCurrentReservationId, getReservationById);

@@ -61,7 +61,7 @@ import {
 
           <div class="field" style="margin: 1em 0">
             <div class="control">
-              <button class="button is-primary" type="submit" [disabled]="!form.valid">Submit</button>
+              <button class="button is-primary" type="submit" [disabled]="!form.valid || !isEditable">Submit</button>
             </div>
           </div>
         </form>
@@ -75,39 +75,38 @@ import {
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ReservationFormComponent implements OnInit, OnChanges {
 
   dayModifier: Function;
   minDate: Date = subDays(new Date(), 1);
   maxDate: Date = addWeeks(new Date(), 2);
   viewDate: Date = new Date();
-
   prevBtnDisabled = false;
-
   nextBtnDisabled = false;
 
-  @Input() reservation: Reservation = {
-    $key: undefined,
-    reservationDate: '',
-    name: '',
-    email: '',
-    // phone: ''
-  };
+  @Input() reservation: Reservation;
+  @Input() isEditable: boolean;
 
   @Output() onSubmit = new EventEmitter<Reservation>();
 
   form: FormGroup;
 
   constructor(public formBuilder: FormBuilder) {
-
     this.dayModifier = function (day: Date): string {
       if (!this.dateIsValid(day)) {
-        // day.cssClass = 'cal-disabled';
         return 'disabled';
       }
       return '';
     }.bind(this);
+
     this.dateOrViewChanged();
+    this.reservation = {
+      $key: null,
+      name: '',
+      email: '',
+      reservationDate: ''
+    };
 
     this.form = this.formBuilder.group({
       '$key': [this.reservation.$key],
@@ -118,12 +117,16 @@ export class ReservationFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
   }
 
   ngOnChanges() {
     if (this.reservation) {
       this.form.patchValue(this.reservation);
+
+      if (!this.isEditable) {
+        this.form.controls['name'].disable();
+        this.form.controls['email'].disable();
+      }
     }
   }
 
@@ -139,14 +142,6 @@ export class ReservationFormComponent implements OnInit, OnChanges {
   }
 
   dateOrViewChanged(): void {
-    // this.prevBtnDisabled = !this.dateIsValid(CalendarUtils.endOfPeriod(this.view, CalendarUtils.subPeriod(this.view, this.viewDate, 1)));
-    // this.nextBtnDisabled = !this.dateIsValid(CalendarUtils.startOfPeriod(this.view, CalendarUtils.addPeriod(this.view, this.viewDate, 1)));
-    // if (this.viewDate < this.minDate) {
-    //   this.changeDate(this.minDate);
-    // } else if (this.viewDate > this.maxDate) {
-    //   this.changeDate(this.maxDate);
-    // }
-    // console.log('this')
   }
 
   changeDate(date: Date): void {
