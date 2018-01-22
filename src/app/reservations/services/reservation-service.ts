@@ -1,67 +1,66 @@
-import { Injectable } from '@angular/core'
-import {Observable} from 'rxjs/Observable'
-import {Reservation} from '../models/res'
-import {AngularFireAuth} from 'angularfire2/auth'
-import {AngularFireDatabase, AngularFireDatabaseModule, AngularFireList} from 'angularfire2/database'
-import {Http} from '@angular/http'
-import {Subscription} from 'rxjs/Subscription';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Reservation } from '../models/res';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Http } from '@angular/http';
 
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class ReservationsService {
-
   reservations: AngularFireList<Reservation[]> = null;
-
   private basePath = '/reservations';
   private uid: string;
-  newReservation$: Subscription = new Subscription();
 
-  constructor(private http: Http, private afAuth: AngularFireAuth,
-              private db: AngularFireDatabase ) {
+  constructor(
+    private http: Http,
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase,
+    private afs: AngularFirestore
+  ) {
     this.afAuth.authState.subscribe(user => {
       if (user) this.uid = user.uid
-    })
+    });
   }
 
-  index() {
-    return this.db.list(`${this.basePath}`).valueChanges();
-  }
-
-  userIndex() {
+  async userIndex() {
     const reservations: Reservation[] = [];
     if (this.uid) {
-      return this.db.list(`${this.basePath}/${this.uid}`).snapshotChanges()
-        .map(items => {
-          items.map(item => {
-            reservations.push({$key: item.key, ...item.payload.val()});
-          });
-          return reservations;
+      const items = await this.afs.collection('reservations').snapshotChanges().take(1).toPromise();
+      await items.map(item => {
+        reservations.push({
+          $key: item.payload.doc.id,
+          email: item.payload.doc.data().email,
+          name: item.payload.doc.data().name,
+          reservationDate: item.payload.doc.data().reservationDate
         });
+      });
+      return reservations;
     } else {
-      return Observable.of([]);
+      return await Observable.of([]).toPromise();
     }
   }
 
   show(reservationId: string) {
-    return this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).valueChanges();
+    return this.afs.doc(`reservations/${reservationId}`).valueChanges().take(1);
   }
 
   createReservation(reservation: Reservation) {
     delete reservation.$key;
-    return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
+    return this.afs.collection('reservations').add(reservation)
   }
 
   async updateReservation(reservation: Reservation) {
     const reservationId = reservation.$key;
     delete reservation.$key;
-    const res = await this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).update(reservation);
+    await this.afs.doc(`reservations/${reservationId}`).update(reservation);
     reservation.$key = reservationId;
     return reservation;
   }
 
   destroy(reservation: Reservation) {
-    const reservationId = reservation.$key;
-    return this.db.list(`${this.basePath}/${this.uid}/${reservationId}`).remove();
+    return this.afs.doc(`reservations/${reservation.$key}`).delete();
   }
 }

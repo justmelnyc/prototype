@@ -42,9 +42,9 @@ export enum EPageType {
 })
 
 export class BookingComponent implements OnInit, OnDestroy {
-  createReservationSub: Subscription;
-  loadReservationSub: Subscription;
-  updateReservationSub: Subscription;
+  createReservationSub: Subscription = new Subscription();
+  loadReservationSub: Subscription = new Subscription();
+  updateReservationSub: Subscription = new Subscription();
   isEditable: boolean;
   reservation$: Observable<Reservation>;
   pageType: EPageType = EPageType.CreatePage;

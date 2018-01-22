@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
-import * as fromReservationsStore from '../store'
+import * as fromReservationsStore from '../store';
 import * as reservationsActions from '../store/actions/reservations-actions';
 import * as fromRootStore from '../../../store';
-import {Reservation} from '../models/res'
-
+import { Reservation } from '../models/res';
 
 @Component({
   selector: 'reservations-index',
@@ -41,7 +40,10 @@ export class ReservationsIndexComponent implements OnInit {
 
   reservations$: Observable<Reservation[]>;
 
-  constructor(public store: Store<fromRootStore.State>, private router: Router, private actR: ActivatedRoute) { }
+  constructor(
+    public store: Store<fromRootStore.State>,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.reservations$ = this.store.select(fromReservationsStore.getAllReservations);

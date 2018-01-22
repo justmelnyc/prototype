@@ -21,7 +21,7 @@ export class ReservationsEffects {
     .ofType(reservationsActions.LOAD_ALL) /* When [Reservations] LOAD ALL action is dispatched */
     .startWith(new reservationsActions.LoadAll())
     .switchMap(() =>
-      this.reservationsService.userIndex()
+      Observable.fromPromise(this.reservationsService.userIndex())
         .map((reservations: Reservation[]) => new reservationsActions.LoadAllSuccess(reservations))
     );
 
@@ -31,7 +31,6 @@ export class ReservationsEffects {
     .map( (action: reservationsActions.Load ) => action.payload)
     .switchMap((id) =>
       this.reservationsService.show(id)
-        // .map((reservation: Reservation) => new reservationsActions.LoadSuccess(reservation))
         .mergeMap( (reservation: Reservation) => {
           return [
             new reservationsActions.LoadSuccess({$key: id, ...reservation}),
@@ -46,7 +45,15 @@ export class ReservationsEffects {
     .map((action: reservationsActions.Create) => action.payload)
     .switchMap(reservation =>
       Observable.fromPromise(this.reservationsService.createReservation(reservation))
-        .map((createdReservation: Reservation) => new reservationsActions.CreateSuccess(createdReservation))
+        .map((createdReservation) => {
+          const result: Reservation = {
+            $key: createdReservation.id,
+            email: reservation.email,
+            name: reservation.name,
+            reservationDate: reservation.reservationDate
+          };
+          return new reservationsActions.CreateSuccess(result);
+        })
     );
 
   @Effect()

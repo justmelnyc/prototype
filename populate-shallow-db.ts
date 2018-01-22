@@ -13,7 +13,6 @@ const usersRef = database().ref('users');
 
 data.users.forEach(
   user => {
-    console.log('inside users loop');
     const userRefKey = usersRef.push({
       "first_name": user.first_name,
       "last_name": user.last_name,

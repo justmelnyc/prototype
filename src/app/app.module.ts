@@ -11,6 +11,7 @@ import { AppComponent } from './app.component'
 import { environment } from '../environments/environment'
 import { AngularFireModule } from 'angularfire2'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth'
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -48,6 +49,7 @@ import {Store} from 'store'
     BrowserAnimationsModule,
     AppRoutingModule,
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     CoreModule,
     ReactiveFormsModule,

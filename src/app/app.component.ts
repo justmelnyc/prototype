@@ -1,14 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import { Router } from '@angular/router'
 
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  query,
-} from '@angular/animations';
+import { trigger, state, style, animate, transition, query } from '@angular/animations';
 import {User} from './auth/models/user'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
