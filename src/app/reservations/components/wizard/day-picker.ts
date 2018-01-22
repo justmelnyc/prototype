@@ -103,7 +103,6 @@ export class DayPickerComponent implements OnChanges, OnInit, OnDestroy {
    */
   @Output() dayClicked: EventEmitter<{day: Date}> = new EventEmitter<{day: Date}>();
 
-
   openRowIndex: number;
 
   todayDate: Date;
@@ -112,11 +111,9 @@ export class DayPickerComponent implements OnChanges, OnInit, OnDestroy {
   currentSelected: Date;
 
   value;
-  onModelChange: Function = (_: any) => {
-  }
+  onModelChange: Function = () => {};
 
-  onModelTouched: Function = () => {
-  }
+  onModelTouched: Function = () => {};
 
   registerOnTouched(fn) {
     this.onModelTouched = fn;
@@ -135,20 +132,13 @@ export class DayPickerComponent implements OnChanges, OnInit, OnDestroy {
     this.refreshDays();
   }
 
-
   ngOnInit(): void {
     this.refreshDays();
   }
 
+  ngOnChanges(changes: any): void {}
 
-  ngOnChanges(changes: any): void {
-
-  }
-
-
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 
   private refreshDays(): void {
     const daysToShow = [];
@@ -168,9 +158,8 @@ export class DayPickerComponent implements OnChanges, OnInit, OnDestroy {
     if (this.dayModifier(dt) === '') {
       this.currentSelected = dt;
 
-
       let selectedDay = new Date(dt).toDateString();
-      selectedDay = selectedDay.split(' ').slice(0, 4).join(' ')
+      selectedDay = selectedDay.split(' ').slice(0, 4).join(' ');
       this.writeValue(selectedDay);
       this.onModelChange(this.value);
       this.onModelTouched();
@@ -187,6 +176,7 @@ export class DayPickerComponent implements OnChanges, OnInit, OnDestroy {
     }
     this.refreshDays();
   }
+
   gotoNext() {
     if (this.dayShowIndex < 15) {
       this.dayShowIndex = this.dayShowIndex + 5;

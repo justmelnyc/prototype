@@ -132,17 +132,16 @@ export class ReservationFormComponent implements OnInit, OnChanges {
 
   submit() {
     if (this.form.valid) {
+      if (!this.form.value.reservationDate) {
+        this.form.value.reservationDate = new Date().toDateString();
+      }
       this.onSubmit.emit(this.form.value);
     }
-
   }
 
-  dayClicked(event) {
-    console.log(event)
-  }
+  dayClicked(event) {}
 
-  dateOrViewChanged(): void {
-  }
+  dateOrViewChanged(): void {}
 
   changeDate(date: Date): void {
     this.viewDate = date;
@@ -152,5 +151,4 @@ export class ReservationFormComponent implements OnInit, OnChanges {
   dateIsValid(date: Date): boolean {
     return date >= this.minDate && date <= this.maxDate;
   }
-
 }
