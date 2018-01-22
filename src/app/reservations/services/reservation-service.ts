@@ -52,10 +52,12 @@ export class ReservationsService {
     return this.db.list(`${this.basePath}/${this.uid}`).push(reservation);
   }
 
-  updateReservation(reservation: Reservation) {
+  async updateReservation(reservation: Reservation) {
     const reservationId = reservation.$key;
     delete reservation.$key;
-    return this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).update(reservation);
+    const res = await this.db.object(`${this.basePath}/${this.uid}/${reservationId}`).update(reservation);
+    reservation.$key = reservationId;
+    return reservation;
   }
 
   destroy(reservation: Reservation) {

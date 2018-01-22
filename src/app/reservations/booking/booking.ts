@@ -44,6 +44,7 @@ export enum EPageType {
 export class BookingComponent implements OnInit, OnDestroy {
   createReservationSub: Subscription;
   loadReservationSub: Subscription;
+  updateReservationSub: Subscription;
   isEditable: boolean;
   reservation$: Observable<Reservation>;
   pageType: EPageType = EPageType.CreatePage;
@@ -82,14 +83,22 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.loadReservationSub = this.actionsSubject
       .asObservable()
       .filter(action => action.type === reservationsActions.LOAD_SUCCESS)
-      .subscribe((action: reservationsActions.LOAD_SUCCESS) => {
+      .subscribe((action: reservationsActions.LoadSuccess) => {
         this.reservation$ = this.store.select(fromReservationsStore.getCurrentReservation);
-      })
+      });
+
+    this.updateReservationSub = this.actionsSubject
+      .asObservable()
+      .filter(action => action.type === reservationsActions.UPDATE_SUCCESS)
+      .subscribe((action: reservationsActions.UpdateSuccess) => {
+        this.router.navigate(['/reservations']);
+      });
   }
 
   ngOnDestroy() {
     this.createReservationSub.unsubscribe();
     this.loadReservationSub.unsubscribe();
+    this.updateReservationSub.unsubscribe();
   }
 
   submitted(reservation: Reservation) {

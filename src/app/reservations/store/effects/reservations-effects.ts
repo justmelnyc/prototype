@@ -53,9 +53,9 @@ export class ReservationsEffects {
   update$: Observable<Action> = this.actions$
     .ofType(reservationsActions.UPDATE)
     .map((action: reservationsActions.Update) => action.payload)
-    .switchMap((reservation) =>
+    .switchMap(reservation =>
       Observable.fromPromise(this.reservationsService.updateReservation(reservation))
-        .map((updatedReservation: Reservation) => new reservationsActions.UpdateSuccess(updatedReservation))
+        .map((updatedReservation) => new reservationsActions.UpdateSuccess(updatedReservation))
     );
 
   @Effect()
