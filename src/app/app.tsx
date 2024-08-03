@@ -1,11 +1,14 @@
 import {Outlet} from 'react-router-dom'
-import {Header} from 'src/shared/components'
+import {Footer, Header} from 'src/shared/components'
 
 function App() {
     return (
-        <div className="flex bg-amber-100">
+        <div className='flex flex-col min-h-screen'>
             <Header/>
-            <Outlet/>
+            <main className='flex-grow container mx-auto px-4 py-8'>
+                <Outlet/>
+            </main>
+            <Footer/>
         </div>
     )
 }
